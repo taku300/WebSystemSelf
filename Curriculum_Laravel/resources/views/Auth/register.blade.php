@@ -41,20 +41,32 @@
               </div>
               <div class="form-group">
                 <label for="password-confirm">生年月日</label>
-                <input type="password" class="form-control" id="password-confirm" name="password_confirmation">
+                <input type="date" class="form-control" id="password-confirm" name="birthday">
               </div>
               <div class="form-group">
-                <label for="password-confirm">体重区分</label>
-                <select name="gender">
-                  <option value="男性">男性</option>
-                  <option value="女性">女性</option>
-                </select>              </div>
+                <label for="password-confirm">身長</label>
+                <input type="text" class="form-control" id="password-confirm" name="height">
+              </div>
+              <div class="form-group">
+                <label for="password-confirm">体重</label>
+                <input type="text" class="form-control" id="password-confirm" name="weight">
+              </div>
+              <div class="form-group">
+                <label for="password-confirm">性別</label>
+                <select name="exercise_level">
+                  <option value=1>低い</option>
+                  <option value=2>普通</option>
+                </select>              
+              </div>
               <div class="text-right">
                 <button type="submit" class="btn btn-primary">送信</button>
               </div>
             </form>
           </div>
         </nav>
+        <div class="text-center">
+          <a href="{{ route('password.request') }}">パスワードの変更はこちらから</a>
+        </div>
       </div>
     </div>
   </div>
