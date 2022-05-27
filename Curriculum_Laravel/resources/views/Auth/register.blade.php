@@ -1,5 +1,4 @@
 @extends('layout/layout')
-
 @section('content')
   <div class="container">
     <div class="row justify-content-center">
@@ -26,36 +25,37 @@
               </div>
               <div class="form-group">
                 <label for="password">パスワード</label>
-                <input type="password" class="form-control" id="password" name="password">
+                <input type="password" class="form-control" id="password" name="password" />
               </div>
               <div class="form-group">
                 <label for="password-confirm">パスワード（確認）</label>
-                <input type="password" class="form-control" id="password-confirm" name="password_confirmation">
+                <input type="password" class="form-control" id="password-confirm" name="password_confirmation" />
               </div>
               <div class="form-group">
-                <label for="password-confirm">性別</label>
+                <label for="gender">性別</label>
                 <select name="gender">
-                  <option value="男性">男性</option>
-                  <option value="女性">女性</option>
+                  <option value="1" {{ old('gender') === '1' ? 'selected' : '' }}>男性</option>
+                  <option value="2" {{ old('gender') === '2' ? 'selected' : '' }}>女性</option>
                 </select>              
               </div>
               <div class="form-group">
-                <label for="password-confirm">生年月日</label>
-                <input type="date" class="form-control" id="password-confirm" name="birthday">
+                <label for="birthday">生年月日</label>
+                <input type="date" class="form-control" id="birthday" name="birthday" value="{{ old('birthday') }}" />
               </div>
               <div class="form-group">
-                <label for="password-confirm">身長</label>
-                <input type="text" class="form-control" id="password-confirm" name="height">
+                <label for="height">身長</label>
+                <input type="text" class="form-control" id="height" name="height" value="{{ old('height') }}"/>
               </div>
               <div class="form-group">
-                <label for="password-confirm">体重</label>
-                <input type="text" class="form-control" id="password-confirm" name="weight">
+                <label for="target_weight">体重</label>
+                <input type="text" class="form-control" id="target_weight" name="target_weight" value="{{ old('target_weight') }}" />
               </div>
               <div class="form-group">
-                <label for="password-confirm">性別</label>
+                <label for="exercise_level">身体運動レベル</label>
                 <select name="exercise_level">
-                  <option value=1>低い</option>
-                  <option value=2>普通</option>
+                  <option value=1.5 {{ old('exercise_level') === '1.5' ? 'selected' : '' }}>低い</option>
+                  <option value=1.75 {{ old('exercise_level') === '1.75' ? 'selected' : '' }}>普通</option>
+                  <option value=2.0 {{ old('exercise_level') === '2.0' ? 'selected' : '' }}>高い</option>
                 </select>              
               </div>
               <div class="text-right">

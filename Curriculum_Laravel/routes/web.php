@@ -20,14 +20,40 @@ use App\Http\Controllers\TweetController;
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function() {
-
+    // HomeController
     Route::get('/', [HomeController::class, 'index']);
+    // AdministratorController
+    Route::get('/administrator', [AdministratorController::class, 'administrator']);
+    Route::get('/food', [AdministratorController::class, 'food']);
+    Route::post('/food', [AdministratorController::class, 'createFood']);
+    Route::get('/food/edit/{id}', [AdministratorController::class, 'foodEdit'])->name('food.edit');
+    Route::post('/food/edit/{id}', [AdministratorController::class, 'createFoodEdit'])->name('food.edit');
+    Route::get('/food/destory/{id}', [AdministratorController::class, 'foodDestory'])->name('food.destory');
+    // RegisterController
+    Route::get('/user_edit', [RegisterController::class, 'userEdit']);
+    Route::post('/user_edit', [RegisterController::class, 'createuserEdit']);
+    Route::get('/selection', [RegisterController::class, 'selection']);
+    Route::get('/add_food/{id}', [RegisterController::class, 'addFood'])->name('add_food');
+    Route::get('/remove_food/{id}', [RegisterController::class, 'removeFood'])->name('remove_food');
+    Route::get('/registers', [RegisterController::class, 'register']);
+    Route::post('/registers', [RegisterController::class, 'createregister']);
+    Route::post('/food/search', [RegisterController::class, 'foodSearch']);
+    // RecipeController
+    Route::get('/recipe', [RecipeController::class, 'recipe']);
+    Route::get('/recipe/detail/{id}', [RecipeController::class, 'recipeDetail'])->name('recipe.detail');
+    Route::get('/recipe/edit/{id}', [RecipeController::class, 'recipeEdit'])->name('recipe.edit');
+    Route::post('/recipe/edit/{id}', [RecipeController::class, 'createRecipeEdit'])->name('recipe.edit');
+    Route::get('/recipe/remove/{id}', [RecipeController::class, 'recipeRemove'])->name('recipe.remove');
+    Route::get('/myrecipe', [RecipeController::class, 'myrecipe']);
+    Route::get('/recipe_search', [RecipeController::class, 'recipeSearch']);
+    // LikeController
+    Route::get('/like/{id}', [LikeController::class, 'createLike'])->name('like');
+    Route::get('/like/destory/{id}', [LikeController::class, 'likeDestory'])->name('like.destory');
+    // TweetController
+    Route::get('/tweet/{id}', [TweetController::class, 'tweet'])->name('tweet');
+    Route::post('/tweet/{id}', [TweetController::class, 'createtweet'])->name('tweet');
+
+
+    
 
 });
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

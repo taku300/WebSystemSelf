@@ -6,5 +6,31 @@ use Illuminate\Http\Request;
 
 class RecipeController extends Controller
 {
-    //
+    public function recipe() {
+        return view('recipe/recipe');
+    }
+
+    public function recipeDetail() {
+
+    }
+
+    public function recipeEdit() {
+
+    }
+
+    public function createRecipeEdit() {
+
+    }
+
+    public function recipeRemove() {
+
+    }
+
+    public function myrecipe() {
+
+    }
+
+    public function recipeSearch() {
+        
+    }
 }

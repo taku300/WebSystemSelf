@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->date('birthday');
             $table->integer('height');
             $table->integer('weight');
-            $table->integer('exercise_level');
+            $table->float('exercise_level');
             $table->tinyInteger('role')->default(0);
             $table->timestamps();
         });

@@ -23,47 +23,53 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rels="stylesheet">
 
     <!-- Styles bootstrapの読み込み（style）-->
+    <link href=" https://unpkg.com/sanitize.css " rel=" stylesheet " />
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
     @yield('stylesheet')
 </head>
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    栄養計算サイト
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </div>
-            <div class="my-navbar-control">
-                <!-- @if(Auth::check()) -->
-                    <!-- <span class="my-navbar-item">{{ Auth::user()->name }}</span> -->
-                    <span class="my-navbar-item">takuma</span>
-                    /
-                    <a href="#" id="logout" class="my-navbar-item">ログアウト</a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-                    <!-- logoutの処理をキャンセルしてlogout-formの処理を実行 -->
-                    <!-- addEventListener('イベント'　イベントリスナー） -->
-                    <script>
-                        document.getElementById('logout').addEventListener('click', function(event) {
-                        event.preventDefault();
-                        document.getElementById('logout-form').submit();
-                        });
-                    </script>
-                <!-- @else -->
-                    <a class="my-navbar-item" href="{{ route('login') }}">ログイン</a>
-                    /
-                    <a class="my-navbar-item" href="{{ route('register') }}">会員登録</a>
-                <!-- @endif -->
-            </div>
-        </nav>
+        <header class='bg-light shadow-sm'>
+            <nav class="navbar navbar-expand-md navbar-light">
+                <div class="container">
+                    <a class="navbar-brand" href="{{ url('/') }}">
+                        栄養計算サイト
+                    </a>
+                </div>
+                <div class="my-navbar-control">
+                    @if(Auth::check())
+                        <span class="my-navbar-item">{{ Auth::user()->name }}</span>
+                        /
+                        <a href="#" id="logout" class="my-navbar-item">ログアウト</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                        <!-- logoutの処理をキャンセルしてlogout-formの処理を実行 -->
+                        <!-- addEventListener('イベント'　イベントリスナー） -->
+                        <script>
+                            document.getElementById('logout').addEventListener('click', function(event) {
+                            event.preventDefault();
+                            document.getElementById('logout-form').submit();
+                            });
+                        </script>
+                    @else
+                        <a class="my-navbar-item" href="{{ route('login') }}">ログイン</a>
+                        /
+                        <a class="my-navbar-item" href="{{ route('register') }}">会員登録</a>
+                    @endif
+                </div>
+            </nav>
+            @if(Auth::check())
+                <div class="justify-content-start">
+                    <button type="button" class="btn btn-success" onclick="location.href='/selection'">食材登録</button>
+                    <button type="button" class="btn btn-danger" onclick="location.href='/recipe'">レシピ一覧</button>
+                    <button type="button" class="btn btn-warning" onclick="location.href='/user_edit'">ユーザー情報編集</button>
+                    <button type="button" class="btn btn-info" onclick="location.href='/administrator'">管理者画面</button>
+                </div>
+            @endif
+        </header>
         @yield('content')
     </div>
 </body>

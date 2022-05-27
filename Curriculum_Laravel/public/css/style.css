@@ -1,0 +1,29 @@
+html {
+    font-size: 12px;
+    box-sizing: border-box;
+}
+p {
+    margin: 0;
+}
+
+.home_logo img {
+    object-fit: cover;
+    width: 100%;
+    height: 50vh;
+   
+}
+
+.ttl {
+    margin: 30px 0 20px 0;
+    border-bottom: solid;
+}
+
+.home_table1 {
+    table-layout: fixed;
+}   
+
+@media screen and (min-width:576px) {
+.btn-success {
+    margin-left: 27px;
+}
+}

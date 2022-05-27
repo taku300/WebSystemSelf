@@ -6,5 +6,11 @@ use Illuminate\Http\Request;
 
 class LikeController extends Controller
 {
-    //
+    public function createLike() {
+
+    }
+
+    public function likeDestory() {
+        
+    }
 }

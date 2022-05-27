@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','gender','birthday','height','weight','exercise_level',
+        'name', 'email', 'password','gender','birthday','height','target_weight','exercise_level',
     ];
 
     /**
@@ -37,7 +37,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function weight() {
-        return $this->belongsTo('App\Weight');
-    }
+
+
 }

@@ -6,5 +6,11 @@ use Illuminate\Http\Request;
 
 class TweetController extends Controller
 {
-    //
+    public function tweet() {
+
+    }
+
+    public function createTweet() {
+        
+    }
 }
