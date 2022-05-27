@@ -22,15 +22,11 @@ class RecipeController extends Controller
 
     }
 
+    public function newRecipe() {
+        
+    }
+
     public function recipeRemove() {
 
-    }
-
-    public function myrecipe() {
-
-    }
-
-    public function recipeSearch() {
-        
     }
 }

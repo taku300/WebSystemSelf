@@ -16,9 +16,9 @@ class CreateFoodsTable extends Migration
         Schema::create('foods', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name', '255');
-            $table->integer('carbohydrate');
-            $table->integer('protain');
-            $table->integer('fat');
+            $table->tinyint('carbohydrate');
+            $table->tinyint('protain');
+            $table->tinyint('fat');
             $table->string('image', '255');
             $table->integer('general_weight');
             $table->string('unit', '255');

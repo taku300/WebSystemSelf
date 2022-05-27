@@ -63,10 +63,11 @@
             </nav>
             @if(Auth::check())
                 <div class="justify-content-start">
-                    <button type="button" class="btn btn-success" onclick="location.href='/selection'">食材登録</button>
+                    <button type="button" class="btn btn-success" onclick="location.href='/selection'">レシピ登録</button>
                     <button type="button" class="btn btn-danger" onclick="location.href='/recipe'">レシピ一覧</button>
+                    <button type="button" class="btn btn-danger" onclick="location.href='/record'">食事記録</button>
                     <button type="button" class="btn btn-warning" onclick="location.href='/user_edit'">ユーザー情報編集</button>
-                    <button type="button" class="btn btn-info" onclick="location.href='/administrator'">管理者画面</button>
+                    <button type="button" class="btn btn-info" onclick="location.href='/administrator'">管理者</button>
                 </div>
             @endif
         </header>

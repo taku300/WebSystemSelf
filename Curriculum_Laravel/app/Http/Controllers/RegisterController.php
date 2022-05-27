@@ -47,8 +47,20 @@ class RegisterController extends Controller
 
     }
 
-    public function foodSearch() {
+    public function record() {
+        return view('record');
+    }
 
+    public function changeDate() {
+
+    }
+
+    public function recordRegister() {
+
+    }
+
+    public function createRecord() {
+        
     }
 }
 

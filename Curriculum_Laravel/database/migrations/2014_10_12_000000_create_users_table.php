@@ -20,12 +20,12 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->string('gender', '255');
+            $table->tinyInteger('gender', '255');
             $table->date('birthday');
-            $table->integer('height');
-            $table->integer('weight');
-            $table->float('exercise_level');
-            $table->tinyInteger('role')->default(0);
+            $table->float('height');
+            $table->float('weight');
+            $table->tinyint('exercise_level');
+            $table->tinyInteger('role')->default(3);
             $table->timestamps();
         });
     }

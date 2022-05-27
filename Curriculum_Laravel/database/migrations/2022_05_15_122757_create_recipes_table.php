@@ -19,6 +19,7 @@ class CreateRecipesTable extends Migration
             $table->string('image', '255');
             $table->string('memo', '255')->nullable();
             $table->integer('user_id');
+            $table->tinyint('del_flg')->default(0);
             $table->timestamps();
         });
     }

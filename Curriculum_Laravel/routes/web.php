@@ -6,6 +6,7 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\TweetController;
+use App\Http\Controllers\SearchController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -37,22 +38,28 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/remove_food/{id}', [RegisterController::class, 'removeFood'])->name('remove_food');
     Route::get('/registers', [RegisterController::class, 'register']);
     Route::post('/registers', [RegisterController::class, 'createregister']);
-    Route::post('/food/search', [RegisterController::class, 'foodSearch']);
     // RecipeController
+    Route::get('/record', [RecipeController::class, 'record']);
+    Route::get('/change/{date}', [RecipeController::class, 'changeDate'])->name('change.data');
+    Route::get('/record/register', [RecipeController::class, 'recordRegister']);
+    Route::post('/record/register/{id}', [RecipeController::class, 'createRecord'])->name('record.register');
     Route::get('/recipe', [RecipeController::class, 'recipe']);
     Route::get('/recipe/detail/{id}', [RecipeController::class, 'recipeDetail'])->name('recipe.detail');
     Route::get('/recipe/edit/{id}', [RecipeController::class, 'recipeEdit'])->name('recipe.edit');
     Route::post('/recipe/edit/{id}', [RecipeController::class, 'createRecipeEdit'])->name('recipe.edit');
+    Route::post('/recipe/new/{id}', [RecipeController::class, 'newRecipe'])->name('new.recipe');
     Route::get('/recipe/remove/{id}', [RecipeController::class, 'recipeRemove'])->name('recipe.remove');
-    Route::get('/myrecipe', [RecipeController::class, 'myrecipe']);
-    Route::get('/recipe_search', [RecipeController::class, 'recipeSearch']);
     // LikeController
     Route::get('/like/{id}', [LikeController::class, 'createLike'])->name('like');
     Route::get('/like/destory/{id}', [LikeController::class, 'likeDestory'])->name('like.destory');
     // TweetController
     Route::get('/tweet/{id}', [TweetController::class, 'tweet'])->name('tweet');
     Route::post('/tweet/{id}', [TweetController::class, 'createtweet'])->name('tweet');
-
+    //SearchController
+    Route::get('/change', [SearchController::class, 'change']);
+    Route::post('/food/search', [SearchController::class, 'foodSearch']);
+    Route::get('/myrecipe', [RecipeController::class, 'myrecipe']);
+    Route::get('/recipe_search', [RecipeController::class, 'recipeSearch']);
 
     
 

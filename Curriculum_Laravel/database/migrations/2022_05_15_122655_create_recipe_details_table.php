@@ -15,10 +15,7 @@ class CreateRecipeDetailsTable extends Migration
     {
         Schema::create('recipe_details', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('carbohydrate');
-            $table->integer('protain');
-            $table->integer('fat');
-            $table->integer('user_id');
+            $table->integer('amount');
             $table->integer('food_id');
             $table->integer('recipe_id');
             $table->timestamps();
