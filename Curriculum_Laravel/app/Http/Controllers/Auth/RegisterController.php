@@ -53,11 +53,11 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'gender' => ['required','string'],
-            'birthday' => ['required'],
-            'height' => ['required','integer'],
-            'target_weight' => ['required','digits_between:-2,5'],
-            'exercise_level' => ['required'],
+            'gender' => ['required','integer'],
+            'birthday' => ['required','date'],
+            'height' => ['required','numeric'],
+            'target_weight' => ['required','numeric'],
+            'exercise_level' => ['required','integer'],
         ]);
     }
 

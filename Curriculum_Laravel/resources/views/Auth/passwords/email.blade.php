@@ -1,5 +1,4 @@
-@extends('layout/layout')
-
+@extends('layouts/layout')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -13,7 +12,9 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
+                    <div class="row justify-content-center">
+                        <p class="mx-3 my-3">ご登録のメールアドレスを入力し「送信する」ボタンを押してください。</p>
+                    </div>
                     <form method="POST" action="{{ route('password.email') }}">
                         @csrf
 
@@ -32,9 +33,9 @@
                         </div>
 
                         <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
+                            <div class="col-md-6 offset-md-8">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('form.register.send') }}
+                                    送信する
                                 </button>
                             </div>
                         </div>

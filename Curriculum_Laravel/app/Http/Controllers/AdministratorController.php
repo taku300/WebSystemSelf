@@ -3,30 +3,93 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Category;
+use App\Food;
+use App\Http\Requests\CreateFood;
+use Illuminate\Support\Facades\Storage;
+
 
 class AdministratorController extends Controller
 {
-    public function administrator() {
-        return view('administrator/ad_home');
+    public function administrator(Request $request) {
+        $categories = Category::get();
+        $category_id = $request->category_id;
+        $keyword = $request->keyword;
+        $clear = $request->param;
+        if($clear){
+            $foods = Food::get();
+        }else if($keyword){
+            $foods = Food::where('name', 'LIKE', "%{$keyword}%")->get();
+        }else if($category_id){     //並べ替え処理
+            $foods = Food::where('category_id', '=', $category_id)->get();
+        }else{
+            $foods = Food::get();
+        }
+        return view('administrators/ad_home', [
+            'categories' => $categories,
+            'foods' => $foods,
+        ]);
     }
 
     public function food() {
-        return view('administrator/create_food');
+        $categories = Category::select('id', 'category')->get()->pluck('category','id');
+        return view('administrators/create_food', [
+            'categories' => $categories,
+        ]);
     }
 
-    public function createFood() {
+    public function createFood(CreateFood $request) {
+        $food = new Food;
 
+        if ($file = $request->image) {
+             // 画像フォームでリクエストした画像を取得
+            $img = $request->file('image');
+            // storage > public > img配下に画像が保存される
+            $path = 'storage/' . $img->store('foods','public');
+            // $fileName = time() . $file->getClientOriginalName();
+            // $target_path = public_path('/foods_img');
+            // $file->move($target_path, $fileName);
+        } else {
+            $path = "image/default.png";
+        }
+
+        $food->image = $path;
+        $columns = ['name', 'carbohydrate', 'protain', 'fat', 'general_weight', 'unit', 'category_id',];
+        foreach ($columns as $column) {
+            $food->$column = $request->$column;
+        }
+        $food->save();
+        return redirect('/administrator');
     }
 
-    public function foodEdit() {
-
+    public function foodEdit(Food $food) {
+        $categories = Category::select('id', 'category')->get()->pluck('category','id');
+        return view('Administrators/edit_food', [
+            'categories' => $categories,
+            'food' => $food,
+        ]);
     }
 
-    public function createfoodEdit() {
-
+    public function createfoodEdit(Food $food ,CreateFood $request) {
+        if ($file = $request->image) {
+            $url = str_replace('storage/', '', $food->image);
+            Storage::disk('public')->delete($url);
+            $img = $request->file('image');
+            $path = 'storage/' . $img->store('foods','public');
+            $food->image = $path;
+        }
+        $columns = ['name', 'carbohydrate', 'protain', 'fat', 'general_weight', 'unit', 'category_id',];
+        foreach ($columns as $column) {
+            $food->$column = $request->$column;
+        }
+        $food->save();
+        return redirect('/administrator');
     }
 
-    public function foodDestory() {
-
+    public function foodDestory(Food $food) {
+        $url = str_replace('storage/', '', $food->image);
+        Storage::disk('public')->delete($url);
+        $food->delete();
+        return redirect('/administrator');
     }
 }

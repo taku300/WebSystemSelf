@@ -1,4 +1,4 @@
-@extends('layout/layout')
+@extends('layouts/layout')
 @section('content')
   <div class="container">
     <div class="row justify-content-center">
@@ -22,28 +22,32 @@
               <div class="form-group">
                 <label for="gender">性別</label>
                 <select name="gender">
-                  <option value="男性" @if(old('gender') === '男性') selected @elseif($user['gender'] === '男性' && !old('gender')) selected @endif>男性</option>
-                  <option value="女性" @if(old('gender') === '女性') selected @elseif($user['gender'] === '女性' && !old('gender')) selected @endif>女性</option>
+                  <option value=1 @if(old('gender') === 1) selected @elseif($user['gender'] === 1 && !old('gender')) selected @endif>男性</option>
+                  <option value=2 @if(old('gender') === 2) selected @elseif($user['gender'] === 2 && !old('gender')) selected @endif>女性</option>
                 </select>              
               </div>
               <div class="form-group">
                 <label for="birthday">生年月日</label>
                 <input type="date" class="form-control" id="birthday" name="birthday" value="{{ old('birthday') ? old('birthday') : $user['birthday'] }}" />
               </div>
-              <div class="form-group">
+              <div class="form-group height">
                 <label for="height">身長</label>
-                <input type="text" class="form-control" id="height" name="height" value="{{ old('height') ? old('height') : $user['height'] }}"/>
+                <input type="text" class="form-control w-50" id="height" name="height" value="{{ old('height') ? old('height') : $user['height'] }}"/>
+                <div class="recommendation-weight">
+                  <p>推奨体重: {{ round(22 * pow(($user['height'] / 100), 2)) }} kg</p>
+                  <span class="direction">身長から計算した、日本で最も健康とされる体重(BMI22)を表示しています。<br>これを参考に目標体重を設定してください。</span>
+                </div>
               </div>
               <div class="form-group">
-                <label for="weight">体重</label>
-                <input type="text" class="form-control" id="weight" name="weight" value="{{ old('weight') ? old('weight') : $user['weight'] }}" />
+                <label for="target_weight">目標体重</label>
+                <input type="text" class="form-control w-50" id="target_weight" name="target_weight" value="{{ old('target_weight') ? old('target_weight') : $user['target_weight'] }}" />
               </div>
               <div class="form-group">
                 <label for="exercise_level">身体運動レベル</label>
                 <select name="exercise_level">
-                  <option value=1.5 @if(old('exercise_level') == 1.5) selected @elseif($user['exercise_level'] === 1.5 && !old('exercise_level')) selected @endif>低い</option>
-                  <option value=1.75 @if(old('exercise_level') == 1.75) selected @elseif($user['exercise_level'] === 1.75 && !old('exercise_level')) selected @endif>普通</option>
-                  <option value=2.0 @if(old('exercise_level') == 2.0) selected @elseif($user['exercise_level'] === 2.0 && !old('exercise_level')) selected @endif>高い</option>
+                  <option value=1 @if(old('exercise_level') == 1) selected @elseif($user['exercise_level'] == 1 && !old('exercise_level')) selected @endif>低い</option>
+                  <option value=2 @if(old('exercise_level') == 2) selected @elseif($user['exercise_level'] == 2 && !old('exercise_level')) selected @endif>普通</option>
+                  <option value=3 @if(old('exercise_level') == 3) selected @elseif($user['exercise_level'] == 3 && !old('exercise_level')) selected @endif>高い</option>
                 </select>              
               </div>
               <div class="text-right">

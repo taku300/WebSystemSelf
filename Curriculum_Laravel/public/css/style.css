@@ -1,3 +1,4 @@
+/* 初期設置 */
 html {
     font-size: 12px;
     box-sizing: border-box;
@@ -6,6 +7,62 @@ p {
     margin: 0;
 }
 
+form {
+    margin: 0;
+}
+
+
+/* 全体レイアウト */
+main {
+    background-color: bisque;
+    padding-top: 69.070px;
+    padding-bottom: 100px;
+
+}
+
+header {
+    width: 100%;
+    background-color: black;
+    color: white;
+    position: fixed;
+    z-index: 10;
+}
+
+
+.header-logo {
+    font-size: large;
+    text-decoration: none;
+    color: white;
+}
+
+.container {
+    padding-top: 20px;
+    min-height: 100vh;
+}
+
+.home {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.hide {
+    overflow: hidden;
+    height: 1.2rem;
+}
+
+.hide-box-{
+    display: none;
+}
+
+.barance-table, .barance-table th, .barance-table td{
+    border: solid gray;
+}
+
+.required {
+    color: red;
+}
+
+/* ホーム画面 */
 .home_logo img {
     object-fit: cover;
     width: 100%;
@@ -26,4 +83,261 @@ p {
 .btn-success {
     margin-left: 27px;
 }
+}
+
+/* ユーザー登録画面 */
+.height {
+    position: relative;
+}
+
+.recommendation-weight {
+    position: absolute;
+    top: 0;
+    right: 15%;
+  }
+.recommendation-weight:hover .direction{
+    display: inline;
+}
+
+.direction {
+    position: absolute;                /* 親要素を基準 */
+    display: none;                        /* 要素を非表示 */
+    padding: 2px;                         /* テキストの前後の余白 */
+    background-color: orange;       /* 背景色（透明度） */
+    width:100px;                          /* 吹き出し全体の幅 */
+    height:120px;
+    left : -1%;
+    top: 2rem;                         /* 表示位置 */
+    font-size: 80%;                       /* 文字サイズ */
+}
+
+.direction::after {
+    border-left: 10px solid transparent;   /* 吹き出し口の幅・色 */
+    border-bottom: 12px solid orange;     /* 吹き出し口の高さ１／２ */
+    border-right: 10px solid transparent;  /* 吹き出し口の高さ１／２ */
+    left: 3%;                           /* 吹き出し口の位置調整 */
+    top: -1rem;                                /* 吹き出し口の縦位置 */
+    content: "";                       /* コンテンツの挿入 */
+    position: absolute;                /* 親要素を基準 */
+}
+
+/* 食材検索 */
+
+.search-logo {
+    font-size: 15px;
+}
+
+.search-btn {
+    background-color: black;
+    /* vertical-align : top; */
+    color: white;
+}
+
+.search {
+    border-radius: 0.5rem;
+}
+
+.foods {
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+
+.food {
+    width: 50%;
+    height: calc(100vw * 0.5 * 0.3);
+    padding: 10px;
+    display: flex;
+}
+
+.food-main {
+    flex: 10;
+    border: solid;
+    border-radius: 1rem 0 0 1rem;
+    display: flex;
+}
+
+.food-submit {
+    flex: 1;
+    border: solid;
+    border-radius: 0 1rem 1rem 0;
+    border-left: none;
+
+}
+
+
+.food-image {
+    flex: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.food-image img {
+    width: 80%;
+    height: 80%;
+    object-fit: cover;
+}
+
+.food-info {
+    flex: 13;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-container {
+    overflow: scroll;
+    width: 80%;
+    height: 80%;
+}
+.food-table {
+    width: 100%;
+}
+.food-table td {
+    font-size: 0.8rem;
+    border-bottom: solid;
+}
+
+@media screen and (max-width:576px) {
+    .food {
+        width: 100%;
+        height: calc(100vw * 0.5 * 0.7);
+    }
+}
+
+.food-submit {
+    display: flex;
+    flex-direction:column;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 1.1rem;
+}
+
+/* 食材登録画面 */
+
+.food-img-box {
+    display: flex;
+    height: 100px;
+}
+
+.submit-img img {
+    object-fit: cover;
+    width: 80%;
+    height: 80%;
+}
+
+.food-img-content {
+    flex: 5;
+}
+
+.submit-img {
+    flex: 2;
+    display: flex;
+    flex-direction:column;
+    /* align-items: center; */
+    justify-content: center;
+}
+
+/* レシピ登録画面 */
+.food-items {
+    width: 100%;
+    display: block;
+}
+
+.food-item {
+    width: 100%;
+    height: calc(100vw * 0.5 * 0.3);
+    padding: 10px;
+    display: flex;
+}
+
+.food-item-right {
+    width: 100%;
+    height: calc(100vw * 0.5 * 0.3);
+    padding: 10px;
+    display: flex;
+}
+
+.left-container {
+    width: 50%;
+}
+.right-container {
+    width: 50%;
+    height: 100vh;
+    background-color: rgb(197, 217, 255);
+    border: solid;
+    position: fixed;
+    top: 60.070px;
+    left: 50%;
+    overflow: scroll;
+}
+@media screen and (max-width:576px) {
+    .food-item {
+        height: calc(100vw * 0.5 * 0.3);
+    }
+}
+
+.param-ttl {
+    margin-top:1rem ;
+
+}
+
+.recipe-img img {
+    object-fit: cover;
+    width: 40%;
+    height: calc(100vw * 0.5 * 0.4 * 0.66);
+}
+
+.recipe-image-form {
+    display: flex;
+    flex-flow: column;
+}
+
+.recipe-image {
+    flex: 7;
+}
+
+.recipe-info {
+    flex: 10;
+}
+
+
+.amount-box {
+    flex: 5.5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: scroll;
+}
+.amount-box form {
+    display: flex;
+    flex-flow: column;
+    
+    width: 80%;
+    height: 80%;
+}
+
+.gram, .amount {
+    width:96%;
+    font-size: 0.8rem;
+}
+.garm-text, .amount-text {
+    width: 65%;
+}
+
+.recipe-text-box {
+    position: relative;
+    margin-top: 3px;
+}
+
+.recipe-text-box p{
+    position: absolute;
+    top: 17%;
+    right: 16%;
+    font-size: 0.8rem;
+}
+
+.recipe-right-image {
+    flex: 10;
 }

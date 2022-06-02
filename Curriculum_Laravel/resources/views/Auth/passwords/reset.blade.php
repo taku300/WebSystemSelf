@@ -1,5 +1,4 @@
-@extends('layout/layout')
-
+@extends('layouts/layout')
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -14,7 +13,7 @@
 
                         <input type="hidden" name="token" value="{{ $token }}">
 
-                        <div class="form-group row">
+                        <div class="form-group row" hidden>
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('form.register.email') }}</label>
 
                             <div class="col-md-6">

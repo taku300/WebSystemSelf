@@ -3,13 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Category;
+use App\Food;
 
 class SearchController extends Controller
 {
-    public function change() {
-
-    }
-
     public function foodSearch() {
 
     }

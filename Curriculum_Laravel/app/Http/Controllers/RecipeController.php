@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class RecipeController extends Controller
 {
     public function recipe() {
-        return view('recipe/recipe');
+        return view('recipes/recipe');
     }
 
     public function recipeDetail() {

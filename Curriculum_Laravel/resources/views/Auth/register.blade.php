@@ -1,4 +1,4 @@
-@extends('layout/layout')
+@extends('layouts/layout')
 @section('content')
   <div class="container">
     <div class="row justify-content-center">
@@ -42,13 +42,17 @@
                 <label for="birthday">生年月日</label>
                 <input type="date" class="form-control" id="birthday" name="birthday" value="{{ old('birthday') }}" />
               </div>
-              <div class="form-group">
+              <div class="form-group height">
                 <label for="height">身長</label>
-                <input type="text" class="form-control" id="height" name="height" value="{{ old('height') }}"/>
+                <input type="text" class="form-control w-50" id="height" name="height" value="{{ old('height') }}"/>
+                <div class="recommendation-weight">
+                  <p>推奨体重:0kg</p>
+                  <span class="direction">身長から計算した、日本で最も健康とされる体重(BMI22)を表示しています。<br>これを参考に目標体重を設定してください。</span>
+                </div>
               </div>
               <div class="form-group">
                 <label for="target_weight">体重</label>
-                <input type="text" class="form-control" id="target_weight" name="target_weight" value="{{ old('target_weight') }}" />
+                <input type="text" class="form-control w-50" id="target_weight" name="target_weight" value="{{ old('target_weight') }}" />
               </div>
               <div class="form-group">
                 <label for="exercise_level">身体運動レベル</label>

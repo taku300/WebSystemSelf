@@ -24,25 +24,25 @@ Route::group(['middleware' => 'auth'], function() {
     // HomeController
     Route::get('/', [HomeController::class, 'index']);
     // AdministratorController
-    Route::get('/administrator', [AdministratorController::class, 'administrator']);
+    Route::get('/administrator', [AdministratorController::class, 'administrator'])->name('administrator');
     Route::get('/food', [AdministratorController::class, 'food']);
     Route::post('/food', [AdministratorController::class, 'createFood']);
-    Route::get('/food/edit/{id}', [AdministratorController::class, 'foodEdit'])->name('food.edit');
-    Route::post('/food/edit/{id}', [AdministratorController::class, 'createFoodEdit'])->name('food.edit');
-    Route::get('/food/destory/{id}', [AdministratorController::class, 'foodDestory'])->name('food.destory');
+    Route::get('/food/edit/{food}', [AdministratorController::class, 'foodEdit'])->name('food.edit');
+    Route::post('/food/edit/{food}', [AdministratorController::class, 'createFoodEdit'])->name('food.edit');
+    Route::get('/food/destory/{food}', [AdministratorController::class, 'foodDestory'])->name('food.destory');
     // RegisterController
     Route::get('/user_edit', [RegisterController::class, 'userEdit']);
-    Route::post('/user_edit', [RegisterController::class, 'createuserEdit']);
+    Route::post('/user_edit', [RegisterController::class, 'createUserEdit']);
     Route::get('/selection', [RegisterController::class, 'selection']);
     Route::get('/add_food/{id}', [RegisterController::class, 'addFood'])->name('add_food');
     Route::get('/remove_food/{id}', [RegisterController::class, 'removeFood'])->name('remove_food');
     Route::get('/registers', [RegisterController::class, 'register']);
-    Route::post('/registers', [RegisterController::class, 'createregister']);
+    Route::post('/registers', [RegisterController::class, 'createRegister']);
+    Route::get('/record', [RegisterController::class, 'record']);
+    Route::get('/record/change/{date}', [RegisterController::class, 'changeDate'])->name('change.data');
+    Route::get('/record/register', [RegisterController::class, 'recordRegister']);
+    Route::post('/record/register/{id}', [RegisterController::class, 'createRecord'])->name('record.register');
     // RecipeController
-    Route::get('/record', [RecipeController::class, 'record']);
-    Route::get('/change/{date}', [RecipeController::class, 'changeDate'])->name('change.data');
-    Route::get('/record/register', [RecipeController::class, 'recordRegister']);
-    Route::post('/record/register/{id}', [RecipeController::class, 'createRecord'])->name('record.register');
     Route::get('/recipe', [RecipeController::class, 'recipe']);
     Route::get('/recipe/detail/{id}', [RecipeController::class, 'recipeDetail'])->name('recipe.detail');
     Route::get('/recipe/edit/{id}', [RecipeController::class, 'recipeEdit'])->name('recipe.edit');
@@ -56,10 +56,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/tweet/{id}', [TweetController::class, 'tweet'])->name('tweet');
     Route::post('/tweet/{id}', [TweetController::class, 'createtweet'])->name('tweet');
     //SearchController
-    Route::get('/change', [SearchController::class, 'change']);
-    Route::post('/food/search', [SearchController::class, 'foodSearch']);
-    Route::get('/myrecipe', [RecipeController::class, 'myrecipe']);
-    Route::get('/recipe_search', [RecipeController::class, 'recipeSearch']);
+    Route::post('/food/search', [SearchController::class, 'foodSearch'])->name('food.search');
+    Route::get('/myrecipe', [SearchController::class, 'myrecipe']);
+    Route::get('/recipe_search', [SearchController::class, 'recipeSearch']);
 
     
 

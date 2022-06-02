@@ -25,11 +25,11 @@ class CreateUser extends FormRequest
     {
         return [
             'name' => 'required',
-            'gender' => 'required',
-            'birthday' => 'required',
-            'height' => 'required|integer',
-            'weight' => 'required|integer',
-            'exercise_level' => 'required',
+            'gender' => 'required|integer',
+            'birthday' => 'required|date',
+            'height' => 'required|numeric',
+            'target_weight' => 'required|numeric',
+            'exercise_level' => 'required|integer',
         ];
     }
 }
