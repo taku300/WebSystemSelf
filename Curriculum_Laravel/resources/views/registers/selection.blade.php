@@ -1,15 +1,8 @@
 @extends('layouts/layout')
 @section('content')
-<?php 
-$array = session('add');
-var_dump(session('add'));
-var_dump($b = array_search(1, $array));
-unset($array[$b]);
-var_dump($array);
-// foreach($a as $a){
-//     echo $a;
-// }
+<?php
 
+var_dump(session('add'));
 ?>
 <div class="left-container">
     <div class="container">
@@ -88,31 +81,31 @@ var_dump($array);
 </div>
 <div class="right-container">
     <div class="container">
-        @foreach($foods as $food)
-        @if(in_array($food->id, session('add')))
+        @if(isset($add_foods))
+        @foreach($add_foods as $food)
             <div class="food-item-right">
                 <div class="food-main">
                     <div class="food-image recipe-image recipe-right-image">
-                        <img src="{{ asset($food->image) }}" alt="{{ $food->image }}" class="">
+                        <img src="{{ asset($food["image"]) }}" alt="{{ $food["image"] }}" class="">
                     </div>
                     <div class="food-info recipe-info">
                         <div class="info-container">
                             <div class="mb-2 hide">
-                                {{ $food->name }} 
+                                {{ $food["name"] }} 
                             </div>
-                            <p class="hide">100gあたり(1 {{ $food->unit }} {{ $food->general_weight }} g )</p>
+                            <p class="hide">100gあたり(1 {{ $food["unit"] }} {{ $food["general_weight"] }} g )</p>
                             <table class="food-table">
                                 <tr class="text-right">
                                     <td height="1rem" width="68">炭水化物：</td>
-                                    <td>{{ $food->carbohydrate }}g</td>
+                                    <td>{{ $food["carbohydrate"] }}g</td>
                                 </tr>
                                 <tr class="text-right">
                                     <td width="68">タンパク質：</td>
-                                    <td>{{ $food->protain }}g</td>
+                                    <td>{{ $food["protain"] }}g</td>
                                 </tr>
                                 <tr class="text-right">
                                     <td width="68">脂質：</td>
-                                    <td>{{ $food->fat }}g</td>
+                                    <td>{{ $food["fat"] }}g</td>
                                 </tr>
                             </table>
                         </div>
@@ -133,11 +126,11 @@ var_dump($array);
                     </div>
                 </div>
                 <div class="food-submit">
-                    <button type="button" class="btn search-btn" onclick="location.href='{{ route('remove_food', ['id' => $food->id]) }}'">ー</button>
+                    <button type="button" class="btn search-btn" onclick="location.href='{{ route('remove_food', ['id' => $food['id']]) }}'">ー</button>
                 </div>
             </div>
-        @endif
         @endforeach
+        @endif
         <div class="container">
             <p class="param-ttl">レシピ名<span class="required">＊</span></p>
             <input type="text" name='name' class="w-100">
@@ -174,11 +167,13 @@ var_dump($array);
                     <td></td>
                 </tr>
             </table>
+
             <p class="param-ttl">アドバイス</p>
             <div class="p-2 border border-2 border-secondary rounded rounded-3 ">
                 <p>a</p>
             </div>
         </div>
+        
     </div>
 </div>
 

@@ -30,10 +30,12 @@ class RegisterController extends Controller
     }
 
     public function selection(Request $request) {
+        // session()->forget('add');
         $categories = Category::get();
         $category_id = $request->category_id;
         $keyword = $request->keyword;
         $clear = $request->param;
+        $add_foods =null;
         if($clear){
             $foods = Food::get();
         }else if($keyword){
@@ -45,41 +47,84 @@ class RegisterController extends Controller
         }
 
         if(session()->has('add')){
-            $id = session('add');
-        }else{
-            $id = null;
+            $add_foods = session('add');
         }
-       
-        if(!session()->has('add')){
-                session()->push('add', 0);
-        }
-
-        session()->push('add', 1);
-
+        // $add_foods = session('add');
+        // $length = count($add_foods); 
+        // $session_id = array_search($id, session('add'));
+        // unset($array[$session_id]);
+        // foreach($add_foods as $food){
+            
+            // }
+        // for($i = 0; $i < $length; $i++){
+        //     if($add_foods[$i]['id'] == 4){
+        //         $target = $i;
+        //         break;
+        //     }
+        // }
         return view('registers/selection', [
             'categories' => $categories,
             'foods' => $foods,
+            'add_foods' => $add_foods,
+            // "a" => $target,
+
         ]);
     }
     
     public function addFood(int $id) {
+        // session()->forget('add');
+        $amount = 100;
+        // $data = compact("id", "amount");
+        $food = Food::find($id);
+        $name = $food->name;
+        $carbohydrate = $food->carbohydrate;
+        $protain = $food->protain;
+        $fat = $food->fat;
+        $image = $food->image;
+        $general_weight = $food->general_weight;
+        $unit = $food->unit;
+        $data = compact("amount", "id", "name", "carbohydrate", "protain", "fat", "image", "general_weight", "unit");
+        // $food = ['amount' => $amount];
         if(session()->has('add')){
-            if(!in_array($id, session('add'))){
-                session()->push('add', $id);
+            $add_foods = session('add');
+            $length = count($add_foods); 
+            for($i = 0; $i < $length; $i++){
+                if($add_foods[$i]['id'] == $id){
+                    $target = $i;
+                    break;
+                }
+            }
+            if(!isset($target)){
+                session()->push('add', $data);
             }
         }else{
-            session()->push('add', $id);
+            session()->push('add', $data);
         }
+        // dd(session('add'));
+      
         return redirect('/selection');
     }
 
     public function removeFood(int $id) {
-        $array = session('add');
-        $session_id = array_search($id, session('add'));
-        unset($array[$session_id]);
+        $add_foods = session('add');
+        $length = count($add_foods); 
+        // $session_id = array_search($id, session('add'));
+        // unset($array[$session_id]);
+        // foreach($add_foods as $food){
+            
+            // }
+        for($i = 0; $i < $length; $i++){
+            if($add_foods[$i]['id'] == $id){
+                $target = $i;
+                break;
+            }
+        }
+        unset($add_foods[$target]);
         session()->forget('add');
-        foreach($array as $array){
-            session()->push('add', $array);
+        if($length != 1){
+            foreach($add_foods as $food){
+            session()->push('add', $food);
+            }
         }
         return redirect('/selection');
     }
