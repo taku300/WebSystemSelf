@@ -12,10 +12,10 @@
             </tr>
             <tr>
                 <td>{{ $user['target_weight'] }}kg</td>
-                <td>{{ $param['energy'] }}kcal</td>
-                <td>{{ $param['carbohydrate_lower'] }}g~{{ $param['carbohydrate_upper'] }}g</td>
-                <td>{{ $param['protain_lower'] }}g~{{ $param['protain_upper'] }}g</td>
-                <td>{{ $param['fat_lower'] }}g~{{ $param['fat_upper'] }}g</td>
+                <td>{{ $target['energy'] }}kcal</td>
+                <td>{{ $target['carbohydrate_lower'] }}g~{{ $target['carbohydrate_upper'] }}g</td>
+                <td>{{ $target['protain_lower'] }}g~{{ $target['protain_upper'] }}g</td>
+                <td>{{ $target['fat_lower'] }}g~{{ $target['fat_upper'] }}g</td>
             </tr>
         </table>
         <p>※設定した年齢、性別、身長、目標体重から必要なエネルギーを計算しています。</p>

@@ -16,26 +16,26 @@
             <form action="{{ route('food.edit', [$food->id]) }}" method="POST" enctype="multipart/form-data">
               @csrf
               <div class="form-group">
-                  <label for="name">食材名</label>
+                  <label for="name">食材名<span class="required">＊</span></label>
                   <input type="text" class="form-control" id="name" name="name" value="{{ old('name') ? old('name') : $food->name }}" />
               </div>
               <div class="form-group">
-                  <label for="height">炭水化物(100gあたり)</label>
+                  <label for="height">炭水化物(100gあたり)<span class="required">＊</span></label>
                   <input type="text" class="form-control" id="carbohydrate" name="carbohydrate" value="{{ old('carbohydrate') ? old('carbohydrate') : $food->carbohydrate  }}"/>
               </div>
               <div class="form-group">
-                  <label for="weight">タンパク質(100gあたり)</label>
+                  <label for="weight">タンパク質(100gあたり)<span class="required">＊</span></label>
                   <input type="text" class="form-control" id="protain" name="protain" value="{{ old('protain') ? old('protain') : $food->protain  }}" />
               </div>
               <div class="form-group">
-                  <label for="weight">脂質(100gあたり)</label>
+                  <label for="weight">脂質(100gあたり)<span class="required">＊</span></label>
                   <input type="text" class="form-control" id="fat" name="fat" value="{{ old('fat') ? old('fat') : $food->fat  }}" />
               </div>
               <table>
                   <tr>
-                      <td><label for="general_weight">一単位(g)</label></td>
+                      <td><label for="general_weight">一単位(g)<span class="required">＊</span></label></td>
                       <td></td>
-                      <td><label for="unit">単位</label></td>
+                      <td><label for="unit">単位<span class="required">＊</span></label></td>
                   </tr>
                   <tr>
                       <td><input type="text" class="form-control" id="general_weight" name="general_weight" value="{{ old('general_weight') ? old('general_weight') : $food->general_weight  }}" /></td>
@@ -51,12 +51,12 @@
                 <div class='submit-img'>
                   <img src="{{ asset($food->image) }}" alt="">
                   @if(old())
-                  <p class=>写真を選択した場合は再度アップロードしてください</p>
+                  <p class="old-image">写真を選択した場合は再度選択してください</p>
                   @endif
                 </div>
               </div>
               <div>
-                  <label for="category_id" class="mt-4">ジャンル</label>
+                  <label for="category_id" class="mt-4">ジャンル<span class="required">＊</span></label>
                   <select name="category_id">
                     @foreach($categories as $key => $category)
                       <option value={{ $key }} {{ (old('category_id') == $key ? 'selected' : $food->category_id == $key && !old('category_id')) ? 'selected' : '' }}>{{$category }}</option>

@@ -28,7 +28,7 @@
             <td valign="middle">
                 <form action="{{ route('administrator') }}" method="get">
                     <input class="search" type="search" name='keyword' placeholder="キーワードを入力" >
-                    <input type="submit">
+                    <input type="submit"　value="検索">
                     <input type="submit" value="クリア" name='param' formaction="{{ route('administrator') }}">
                 </form>
             </td>
@@ -48,6 +48,10 @@
                         </div>
                         <p class="hide">100gあたり(1 {{ $food->unit }} {{ $food->general_weight }} g )</p>
                             <table class="food-table">
+                                <tr class="text-right">
+                                    <td height="1rem" width="68">エネルギー：</td>
+                                    <td>{{ $food->carbohydrate * 4 + $food->protain * 4 + $food->fat * 9 }}kcal</td>
+                                </tr>
                                 <tr class="text-right">
                                     <td height="1rem" width="68">炭水化物：</td>
                                     <td>{{ $food->carbohydrate }}g</td>

@@ -50,9 +50,13 @@ header {
     height: 1.2rem;
 }
 
-.hide-box-{
-    display: none;
+.old-image {
+    color: red;
 }
+
+/* .hide-box{
+    display: none;
+} */
 
 .barance-table, .barance-table th, .barance-table td{
     border: solid gray;
@@ -264,7 +268,7 @@ header {
 }
 .right-container {
     width: 50%;
-    height: 100vh;
+    height: calc(100vh - 60px);
     background-color: rgb(197, 217, 255);
     border: solid;
     position: fixed;
@@ -276,6 +280,11 @@ header {
     .food-item {
         height: calc(100vw * 0.5 * 0.3);
     }
+}
+
+.foods-name {
+    min-height: 1rem;
+    padding-top: 0;
 }
 
 .param-ttl {
@@ -295,22 +304,22 @@ header {
 }
 
 .recipe-image {
-    flex: 7;
-}
-
-.recipe-info {
     flex: 10;
 }
 
+.recipe-info {
+    flex: 9;
+}
 
-.amount-box {
+
+.amount-boxes {
     flex: 5.5;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: scroll;
 }
-.amount-box form {
+.amount-boxes div {
     display: flex;
     flex-flow: column;
     
@@ -318,11 +327,11 @@ header {
     height: 80%;
 }
 
-.gram, .amount {
+.amount, .numg {
     width:96%;
     font-size: 0.8rem;
 }
-.garm-text, .amount-text {
+.num-text, .amount-text {
     width: 65%;
 }
 
@@ -340,4 +349,29 @@ header {
 
 .recipe-right-image {
     flex: 10;
+}
+
+/* レシピ一覧画面 */
+.like {
+    color: gray;
+}
+
+/* レシピ詳細 */
+.food-main-detail {
+    border-radius: 1rem;
+}
+
+.like-box {
+    position: relative;
+    padding-right: 1rem;
+}
+
+.likes-count {
+    position: absolute;
+    top: 0.5px;
+    left: 15px;
+}
+
+.pink {
+    color: deeppink;
 }

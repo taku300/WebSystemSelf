@@ -28,7 +28,7 @@ class CreateFood extends FormRequest
             'carbohydrate' => 'required|integer|max:255',
             'protain' => 'required|integer|max:255',
             'fat' => 'required|integer|max:255',
-            'image' => 'image',
+            'image' => 'image|nullable',
             'general_weight' => 'required|integer',
             'unit' => 'required|string|max:255',
             'category_id' => 'required|integer',

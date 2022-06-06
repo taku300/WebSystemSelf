@@ -26,6 +26,8 @@
     <link href=" https://unpkg.com/sanitize.css " rel=" stylesheet " />
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <!-- fontawesome -->
+    <script src="https://kit.fontawesome.com/e39a0f3237.js" crossorigin="anonymous"></script>
     @yield('stylesheet')
 </head>
 
@@ -63,7 +65,7 @@
             </nav>
             @if(Auth::check())
                 <div class="justify-content-start">
-                    <button type="button" class="btn btn-success" onclick="location.href='/selection'">レシピ登録</button>
+                    <button type="button" class="btn btn-success" onclick="location.href='/registers'">レシピ登録</button>
                     <button type="button" class="btn btn-danger" onclick="location.href='/recipe'">レシピ一覧</button>
                     <button type="button" class="btn btn-info" onclick="location.href='/record'">食事記録</button>
                     <button type="button" class="btn btn-warning" onclick="location.href='/user_edit'">ユーザー情報編集</button>

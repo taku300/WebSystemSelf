@@ -33,25 +33,23 @@ Route::group(['middleware' => 'auth'], function() {
     // RegisterController
     Route::get('/user_edit', [RegisterController::class, 'userEdit']);
     Route::post('/user_edit', [RegisterController::class, 'createUserEdit']);
-    Route::get('/selection', [RegisterController::class, 'selection']);
     Route::get('/add_food/{id}', [RegisterController::class, 'addFood'])->name('add_food');
     Route::get('/remove_food/{id}', [RegisterController::class, 'removeFood'])->name('remove_food');
-    Route::get('/registers', [RegisterController::class, 'register']);
-    Route::post('/registers', [RegisterController::class, 'createRegister']);
+    Route::get('/registers', [RegisterController::class, 'register'])->name('registers');
+    Route::post('/registers', [RegisterController::class, 'createRegister'])->name('registers');
     Route::get('/record', [RegisterController::class, 'record']);
     Route::get('/record/change/{date}', [RegisterController::class, 'changeDate'])->name('change.data');
     Route::get('/record/register', [RegisterController::class, 'recordRegister']);
     Route::post('/record/register/{id}', [RegisterController::class, 'createRecord'])->name('record.register');
     // RecipeController
-    Route::get('/recipe', [RecipeController::class, 'recipe']);
+    Route::get('/recipe', [RecipeController::class, 'recipe'])->name('recipe');
     Route::get('/recipe/detail/{id}', [RecipeController::class, 'recipeDetail'])->name('recipe.detail');
     Route::get('/recipe/edit/{id}', [RecipeController::class, 'recipeEdit'])->name('recipe.edit');
     Route::post('/recipe/edit/{id}', [RecipeController::class, 'createRecipeEdit'])->name('recipe.edit');
     Route::post('/recipe/new/{id}', [RecipeController::class, 'newRecipe'])->name('new.recipe');
-    Route::get('/recipe/remove/{id}', [RecipeController::class, 'recipeRemove'])->name('recipe.remove');
+    Route::get('/recipe/destory/{id}', [RecipeController::class, 'recipeDestory'])->name('recipe.destory');
     // LikeController
-    Route::get('/like/{id}', [LikeController::class, 'createLike'])->name('like');
-    Route::get('/like/destory/{id}', [LikeController::class, 'likeDestory'])->name('like.destory');
+    Route::get('/like', [LikeController::class, 'like'])->name('like');
     // TweetController
     Route::get('/tweet/{id}', [TweetController::class, 'tweet'])->name('tweet');
     Route::post('/tweet/{id}', [TweetController::class, 'createtweet'])->name('tweet');
