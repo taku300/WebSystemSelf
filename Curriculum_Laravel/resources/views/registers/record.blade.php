@@ -22,32 +22,62 @@
         <p>&emsp;またそれに基づいた炭水化物、タンパク質、脂質の栄養バランスを表示しています。</p>
         <p>&emsp;この栄養バランスに近づくような食事を心がけましょう。</p>
         <h3 class='ttl'>今日の食事</h3>
-        <table border="2" width="100%" align="center" class="barance_table1">
+        <div class='d-flex justify-content-between'>
+            <form action="/record">
+                <table>
+                    <th>
+                        <td width="190" class="text-left">
+                            <div class="search-logo">
+                                日付を選択してください。
+                            </div>
+                        </td>
+                        <td>    
+                            <input type="submit" value='確定'>
+                        </td>
+                    </th>
+                </table>
+                <input type="date" name='date' value='{{ $date }}'>
+            </form>
+            <button type="button" class="btn search-btn" onclick="location.href='/record/register'">レシピから登録</button>
+        </div>
+        <table border="2" width="100%" align="center" class="barance_table1 mt-4">
             <tr>
                 <th>レシピ名</th>
                 <th>エネルギー</th>
                 <th>炭水化物</th>
                 <th>タンパク質</th>
                 <th>脂質</th>
+                <th style="text-align: center">ー</th>
+                <th style="text-align: center">ー</th>
             </tr>
-            <tr>
-                <td>a</td>
-                <td>a</td>
-                <td>a</td>
-                <td>a</td>
-                <td>a</td>
-            </tr>
-            <tr>
-                <td>合計</td>
-                <td >a</td>
-                <td>a</td>
-                <td>a</td>
-                <td>a</td>
-            </tr>
+            @if($recipes)
+                @foreach($recipes as $key => $recipe)
+                <tr>
+                    <td>{{ $recipe->name }}</td>
+                    <td>{{ $recipe->energy }}</td>
+                    <td>{{ $recipe->carbohydrate }}</td>
+                    <td>{{ $recipe->protain }}</td>
+                    <td>{{ $recipe->fat }}</td>
+                    <td><a href="{{ route('recipe.detail', ['id' => $recipe->id]) }}">詳細</a></td>     
+                    <td><a href="{{ route('record.destory', ['id' => $history_key[$key]]) }}">消去</a></td>     
+                </tr>
+                @endforeach
+                <tr>
+                    <th>合計</th>
+                    <th>{{ $sum['energy'] }}</th>
+                    <th>{{ $sum['carbohydrate'] }}</th>
+                    <th>{{ $sum['protain'] }}</th>
+                    <th>{{ $sum['fat'] }}</th>
+                    <th style="text-align: center">ー</th>
+                    <th style="text-align: center">ー</th>
+                </tr>
+            @endif
         </table>
         <h3 class='ttl'>アドバイス</h3>
         <div class="p-2 border border-2 border-secondary rounded rounded-3 ">
-            <p>a</p>
+            @foreach($alerts as $alert)
+                <p>{{$alert}}</p>
+            @endforeach
         </div>
     </div>
 @endsection

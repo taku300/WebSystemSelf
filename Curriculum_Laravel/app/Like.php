@@ -16,8 +16,8 @@ class Like extends Model
         return $this->belongsTo('App\Recipe');
     }
 
-    public function isLikedBy($recipe_id): bool {
-        $user = Auth::user();
-        return Like::where('user_id', $user->id)->where('recipe_id', $recipe_id)->first() !==null;
-    }
+    // public function isLikedBy($recipe_id): bool {
+    //     $user = Auth::user();
+    //     return Like::where('user_id', $user->id)->where('recipe_id', $recipe_id)->first() !==null;
+    // }
 }

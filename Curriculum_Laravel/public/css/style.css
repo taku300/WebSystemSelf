@@ -142,12 +142,14 @@ header {
 }
 
 .foods {
+    
     display: flex;
     flex-wrap: wrap;
     
 }
 
 .food {
+    position:relative;
     width: 50%;
     height: calc(100vw * 0.5 * 0.3);
     padding: 10px;
@@ -356,6 +358,26 @@ header {
     color: gray;
 }
 
+.ellipse{
+    position: absolute;
+    top: -7px;
+    left: -3px;
+    width: 53px;
+    height: 30px;
+    line-height: 100px;
+    background-color: red;
+    border-radius: 50%;
+    color: #fff;
+    text-align: center;
+}
+
+.ellipse p {
+    position: absolute;
+    top: -35px;
+    left: 4px;
+    font-size: 0.8rem;
+}
+
 /* レシピ詳細 */
 .food-main-detail {
     border-radius: 1rem;
@@ -375,3 +397,15 @@ header {
 .pink {
     color: deeppink;
 }
+
+.register-button {
+    border:none;
+    background-color:transparent;
+    color: #3490dc;
+    text-decoration: none;
+}
+
+.register-button:hover {
+    color: #551A8B;
+    text-decoration: underline;
+   }

@@ -14,7 +14,7 @@
                         </td>
                         @foreach($categories as $category)
                             <td>    
-                                <button type="button" class="btn search-btn" onclick="location.href='{{ route('register', ['category_id' => $category->id]) }}'">{{ $category->category }}</button>
+                                <button type="button" class="btn search-btn" onclick="location.href='{{ route('registers', ['category_id' => $category->id]) }}'">{{ $category->category }}</button>
                             </td>
                         @endforeach
                     </th>
@@ -28,17 +28,22 @@
                         </div>
                     </td>
                     <td valign="middle">
-                        <form action="{{ route('register') }}" method="get">
+                        <form action="{{ route('registers') }}" method="get">
+                            <input type="hidden" id="judge" value=1>
+                            <input type="hidden" id="count" value=10>
+                            <input type='hidden' id="keyword" value='{{ $keyword }}'>
+                            <input type='hidden' id="clear" value='{{ $clear }}'>
+                            <input type='hidden' id="category_id" value='{{ $category_id }}'>
                             <input class="search" type="search" name='keyword' placeholder="キーワードを入力" >
-                            <input type="submit"　value="検索">
-                            <input type="submit" value="クリア" name='param' formaction="{{ route('register') }}">
+                            <input type="submit" value="検索">
+                            <input type="submit" value="クリア" name='param' formaction="{{ route('registers') }}">
                         </form>
                     </td>
                 </th>
             </table>
         </div>
 
-        <div class="foods food-items">
+        <div id="register-foods" class="foods food-items">
             @foreach($foods as $food)
             <form action="{{ route('add_food', ['id' => $food->id]) }}" method="get">
                 <div class="food-item">
@@ -73,99 +78,23 @@
                             </div>
                         </div>
                         <div class="amount-boxes">
-                            <div id= "{{ 'num-box-' . $food->id }}" class = "d-none">
-                                <input type="button" value="gで指定" name='num' class="num" id = "{{ 'num-change-' . $food->id }}">
-                                <div class="recipe-text-box" id = "{{ 'num-' . $food->id }}">
-                                    <input type="text" name ="{{ 'num-' . $food->id }}" class="num-text " id = "{{ 'num-text-' . $food->id }}">
-                                    <p class = "">個</p>
+                            <form onsubmit="return false;"> 
+                                <input type="hidden" value="100" id="{{'data-' . $food->id}}" >
+                                <div id= "{{ 'num-box-' . $food->id }}" class = "d-none">
+                                    <input type="button" value="gで指定" name='num' class="change1 num" id = "{{ 'num-change-' . $food->id }}" data-id="{{ $food->id }}" data-carbohydrate="{{ $food->carbohydrate }}" data-protain="{{ $food->protain }}" data-fat="{{ $food->fat }}" data-general_weight="{{ $food->general_weight }}">
+                                    <div class="recipe-text-box" id = "{{ 'num-' . $food->id }}">
+                                        <input type="text" name ="{{ 'num-' . $food->id }}" class="change2 num-text" id = "{{ 'num-text-' . $food->id }}" data-id="{{ $food->id }}" data-carbohydrate="{{ $food->carbohydrate }}" data-protain="{{ $food->protain }}" data-fat="{{ $food->fat }}" data-general_weight="{{ $food->general_weight }}">
+                                        <p class = "">個</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div id = "{{ 'amount-box-' . $food->id }}" class="">
-                                <input type="button" value="個数で指定" name='amount' class="amount" id = "{{ 'amount-change-' . $food->id }}">
-                                <div class="recipe-text-box" id = "{{ 'amount-' . $food->id }}">
-                                    <input type="text" name ="{{ 'amount-' . $food->id }}" class = "amount-text" id = "{{ 'amount-text-' . $food->id }}" value=100>
-                                    <p>g</p>
+                                <div id = "{{ 'amount-box-' . $food->id }}" class="">
+                                    <input type="button" value="個数で指定" name='amount' class="change3 amount" id = "{{ 'amount-change-' . $food->id }}" data-id="{{ $food->id }}" data-carbohydrate="{{ $food->carbohydrate }}" data-protain="{{ $food->protain }}" data-fat="{{ $food->fat }}" data-general_weight="{{ $food->general_weight }}">
+                                    <div class="recipe-text-box" id = "{{ 'amount-' . $food->id }}">
+                                        <input type="text" name ="{{ 'amount-' . $food->id }}" class = "change4 amount-text" id = "{{ 'amount-text-' . $food->id }}" value=100 data-id="{{ $food->id }}" data-carbohydrate="{{ $food->carbohydrate }}" data-protain="{{ $food->protain }}" data-fat="{{ $food->fat }}" data-general_weight="{{ $food->general_weight }}" >
+                                        <p>g</p>
+                                    </div>
                                 </div>
-                            </div>
-                            <?php 
-                            $id = json_encode($food->id);
-                            $carbohydrate = json_encode($food->carbohydrate);
-                            $protain = json_encode($food->protain);
-                            $fat = json_encode($food->fat);
-                            $general_weight = json_encode($food->general_weight);
-                            ?> 
-                            <script>
-                                window.addEventListener('DOMContentLoaded', function(){
-                                    var id = JSON.parse('<?php echo $id; ?>');
-                                    var carbohydrate = JSON.parse('<?php echo $carbohydrate; ?>');
-                                    var protain = JSON.parse('<?php echo $protain; ?>');
-                                    var fat = JSON.parse('<?php echo $fat; ?>');
-                                    var energy = carbohydrate * 4 + protain * 4 + fat * 9;
-                                    var general_weight = JSON.parse('<?php echo $general_weight; ?>');
-                                    var energy_id = document.getElementById('energy-' + id);
-                                    var carbohydrate_id = document.getElementById('carbohydrate-' + id);
-                                    var protain_id = document.getElementById('protain-' + id);
-                                    var fat_id = document.getElementById('fat-' + id);
-                                    var gram = document.getElementById('amount-text-' + id);
-                                    var num = document.getElementById('num-text-' + id);
-                                    var num_change = document.getElementById('num-change-' + id);
-                                    var amount_change = document.getElementById('amount-change-' + id);
-                                    var num_box = document.getElementById('num-box-' + id);
-                                    var amount_box = document.getElementById('amount-box-' + id);
-                                    gram.addEventListener("input",function(){
-                                        var g = Number(gram.value);    
-                                        if (Number.isInteger(g)){
-                                            var energy_change = Math.round((energy * g / 100)*10)/10;
-                                            var carbohydrate_change = Math.round((carbohydrate * g / 100)*10)/10;
-                                            var protain_change = Math.round((protain * g / 100)*10)/10;
-                                            var fat_change = Math.round((fat * g / 100)*10)/10;
-                                            energy_id.textContent = energy_change + 'g';
-                                            carbohydrate_id.textContent = carbohydrate_change + 'g';
-                                            protain_id.textContent = protain_change + 'g';
-                                            fat_id.textContent = fat_change + 'g';
-                                        }
-                                    });
-                                    num.addEventListener("input",function(){
-                                        var n = Number(num.value);    
-                                        if (Number.isInteger(n)){
-                                            var energy_change = Math.round((energy * general_weight / 100 * n)*10)/10;
-                                            var carbohydrate_change = Math.round((carbohydrate * general_weight / 100 * n)*10)/10;
-                                            var protain_change = Math.round((protain * general_weight / 100 * n)*10)/10;
-                                            var fat_change = Math.round((fat * general_weight / 100 * n)*10)/10;
-                                            energy_id.textContent = energy_change + 'g';
-                                            carbohydrate_id.textContent = carbohydrate_change + 'g';
-                                            protain_id.textContent = protain_change + 'g';
-                                            fat_id.textContent = fat_change + 'g';
-                                        }
-                                    });
-
-                                    num_change.addEventListener("click",function(){
-                                        amount_box.classList.remove('d-none');
-                                        num_box.classList.add('d-none');
-                                        gram.value = 100;
-                                        num.value = null;
-                                        energy_id.testContent = energy + 'g';
-                                        carbohydrate_id.textContent = carbohydrate + 'g';
-                                        protain_id.textContent = protain + 'g';
-                                        fat_id.textContent = fat + 'g';
-                                    });
-                                    amount_change.addEventListener("click",function(){
-                                        num_box.classList.remove('d-none');
-                                        amount_box.classList.add('d-none');
-                                        var energy_num = Math.round((energy * general_weight / 100)*10)/10;
-                                        var carbohydrate_num = Math.round((carbohydrate * general_weight / 100)*10)/10;
-                                        var protain_num = Math.round((protain * general_weight / 100)*10)/10;
-                                        var fat_num = Math.round((fat * general_weight / 100)*10)/10;
-                                        gram.value = null;
-                                        num.value = 1;
-                                        energy_id.textContent = energy_num + 'g';
-                                        carbohydrate_id.textContent = carbohydrate_num + 'g';
-                                        protain_id.textContent = protain_num + 'g';
-                                        fat_id.textContent = fat_num + 'g';
-                                        
-                                    });
-                                });
-                            </script> 
+                            </form>
                         </div>
                     </div>
                     <div class="food-submit">
@@ -297,5 +226,8 @@
         
     </div>
 </div>
+
+
+
 
 @endsection

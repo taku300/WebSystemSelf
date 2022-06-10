@@ -27,14 +27,20 @@
             </td>
             <td valign="middle">
                 <form action="{{ route('administrator') }}" method="get">
-                    <input class="search" type="search" name='keyword' placeholder="キーワードを入力" >
-                    <input type="submit"　value="検索">
+                    <input type="hidden" id="judge" value=1>
+                    <input type="hidden" id="count" value=10>
+                    <input type='hidden' id="keyword" value='{{ $keyword }}'>
+                    <input type='hidden' id="clear" value='{{ $clear }}'>
+                    <input type='hidden' id="category_id" value='{{ $category_id }}'>
+                    <input class="search" type="search" name='keyword' placeholder="キーワードを入力" value='{{ $keyword }}'>
+                    <input type="submit" value="検索">
                     <input type="submit" value="クリア" name='param' formaction="{{ route('administrator') }}">
                 </form>
             </td>
         </th>
     </table>
-    <div class="foods">
+
+    <div id="foods" class="foods">
         @foreach($foods as $food)
         <div class="food">
             <div class="food-main">

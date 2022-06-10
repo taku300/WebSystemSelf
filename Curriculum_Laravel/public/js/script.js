@@ -49,7 +49,7 @@ $(document).ready(function() {
     // })
 
     // いいね機能
-    $('.like').on('click', function(e) {
+    $(document).on('click','.like', function(e) {
         var e = e || window.event;
         var recipe = e.target || e.stcElement;
         var recipe_id = recipe.id;
@@ -84,7 +84,7 @@ $(document).ready(function() {
     });        
         
         // グラムを入力すると変換
-        $('.change4').on('keyup',function(e){
+        $(document).on('keyup','.change4',function(e){
             var e = e || window.event;
             var food = e.target || e.stcElement;
             var food_id = food.dataset.id;
@@ -116,7 +116,7 @@ $(document).ready(function() {
             }
         });
         // gを入力すると変換
-        $('.change2').on("keyup",function(e){
+        $(document).on("keyup",'.change2',function(e){
             var e = e || window.event;
             var food = e.target || e.stcElement;
             var food_id = food.dataset.id;
@@ -149,7 +149,7 @@ $(document).ready(function() {
         });
 
         // gで指定ボタン
-        $('.change1').on("click",function(e){
+        $(document).on('click','.change1',function(e){
             var e = e || window.event;
         var food = e.target || e.stcElement;
         var food_id = food.dataset.id;
@@ -178,7 +178,7 @@ $(document).ready(function() {
         });
 
         // 個数で指定ボタン
-        $('.change3').on("click",function(e){
+        $(document).on('click','.change3',function(e){
             var e = e || window.event;
             var food = e.target || e.stcElement;
             var food_id = food.dataset.id;
@@ -222,16 +222,23 @@ $(window).on("scroll", function () {
         //ウィンドウのトップから表示領域の一番下までの高さ          
         var window_h = $(window).height() + $(window).scrollTop(); 
         //後どれくらいスクロールできるか   
-        var scroll_pos = (document_h - window_h) ;   
+        var scroll_pos = (document_h - window_h) ;  
+        var url = location.pathname;
+        console.log(url);
         // 画面最下部にスクロールされている場合
         if (scroll_pos <= 1) {
             // ajaxコンテンツ追加処理
-            ajaxAddContent();
+            if(url == '/administrator' || url == '/registers' || url.indexOf('/recipe/edit/') != -1){
+                ajaxAddContentFood();
+            }
+            if(url == '/recipe' || url == '/record/register'){
+                ajaxAddContentRecipe();
+            }
         }
     });
      
-    // ajaxコンテンツ追加処理
-    function ajaxAddContent() {
+    // Foodコンテンツ追加処理
+    function ajaxAddContentFood() {
         // 追加コンテンツ
         var add_content = "";
         // コンテンツ件数           
@@ -240,6 +247,7 @@ $(window).on("scroll", function () {
         var keyword = $('#keyword').val(); 
         var clear = $('#clear').val();
         var category_id = $('#category_id').val();
+        var recipe_id = $('#recipe_id').val();
         // ajax処理
         $.ajax({
             headers: { //HTTPヘッダ情報をヘッダ名と値のマップで記述
@@ -257,22 +265,21 @@ $(window).on("scroll", function () {
             })
             //通信成功した時の処理
             .done(function (data) {
-                console.log(data);
                 // 管理者画面に食材を追加
-                $.each(data.foods,function(key,item){
-                    var energy= item.carbohydrate * 4 + item.protain * 4 + item.fat * 9;
+                $.each(data.foods,function(key,food){
+                    var energy= food.carbohydrate * 4 + food.protain * 4 + food.fat * 9;
                     $("#foods").append(`\
                     <div class="food">\
                         <div class="food-main">\
                             <div class="food-image">\
-                                <img src="${item.image}" alt="" class="">\
+                                <img src="/${food.image}" alt="" class="">\
                             </div>\
                             <div class="food-info">\
                                 <div class="info-container">\
                                     <div class="mb-2 hide">\
-                                        ${item.name} \
+                                        ${food.name} \
                                     </div>\
-                                    <p class="hide">100gあたり(1 ${item.unit} ${item.general_weight } g )</p>\
+                                    <p class="hide">100gあたり(1 ${food.unit} ${food.general_weight } g )</p>\
                                         <table class="food-table">\
                                             <tr class="text-right">\
                                                 <td height="1rem" width="68">エネルギー：</td>\
@@ -280,78 +287,143 @@ $(window).on("scroll", function () {
                                             </tr>\
                                             <tr class="text-right">\
                                                 <td height="1rem" width="68">炭水化物：</td>\
-                                                <td>${item.carbohydrate}g</td>\
+                                                <td>${food.carbohydrate}g</td>\
                                             </tr>\
                                             <tr class="text-right">\
                                                 <td width="68">タンパク質：</td>\
-                                                <td>${item.protain}g</td>\
+                                                <td>${food.protain}g</td>\
                                             </tr>\
                                             <tr class="text-right">\
                                                 <td width="68">脂質：</td>\
-                                                <td>${item.fat}}g</td>\
+                                                <td>${food.fat}}g</td>\
                                             </tr>\
                                         </table>\
                                 </div>\
                             </div>\
                         </div>\
                         <div class="food-submit">\
-                            <a href="/food/edit/${item.id}">編集</a>\
-                            <a href="/food/destory/${item.id}">消去</a>\
+                            <a href="/food/edit/${food.id}">編集</a>\
+                            <a href="/food/destory/${food.id}">消去</a>\
                         </div>\
                     </div>\
                     `);
                     
                 })
                 // 登録画面に食材を追加
-                $.each(data.foods,function(key,item){
-                    var energy= item.carbohydrate * 4 + item.protain * 4 + item.fat * 9;
+                $.each(data.foods,function(key,food){
+                    var energy= food.carbohydrate * 4 + food.protain * 4 + food.fat * 9;
                     $("#register-foods").append(`\
-                    <form action="/add_food/${item.id}" method="get">\
+                    <form action="/add_food/${food.id}" method="get">\
                         <div class="food-item">\
                             <div class="food-main">\
                                 <div class="food-image recipe-image">\
-                                    <img src="${item.image}" alt="" class="">\
+                                    <img src="/${food.image}" alt="" class="">\
                                 </div>\
                                 <div class="food-info recipe-info">\
                                     <div class="info-container">\
                                         <div class="mb-2 hide">\
-                                            ${item.name} \
+                                            ${food.name} \
                                         </div>\
-                                        <p class="hide">100gあたり(1 ${item.unit} ${item.general_weight } g )</p>\
+                                        <p class="hide">100gあたり(1 ${food.unit} ${food.general_weight } g )</p>\
                                         <table class="food-table">\
                                             <tr class="text-right">\
                                                 <td height="1rem" width="68">エネルギー：</td>\
-                                                <td id="${'energy-' + item.id}">${energy}kcal</td>\
+                                                <td id="${'energy-' + food.id}">${energy}kcal</td>\
                                             </tr>\
                                             <tr class="text-right">\
                                                 <td height="1rem" width="68">炭水化物：</td>\
-                                                <td id="${'carbohydrate-' + item.id}">${item.carbohydrate}g</td>\
+                                                <td id="${'carbohydrate-' + food.id}">${food.carbohydrate}g</td>\
                                             </tr>\
                                             <tr class="text-right">\
                                                 <td width="68">タンパク質：</td>\
-                                                <td id="${'protain-' + item.id}">${item.protain}g</td>\
+                                                <td id="${'protain-' + food.id}">${food.protain}g</td>\
                                             </tr>\
                                             <tr class="text-right">\
                                                 <td width="68">脂質：</td>\
-                                                <td id="${'fat-' + item.id}">${item.fat}}g</td>\
+                                                <td id="${'fat-' + food.id}">${food.fat}}g</td>\
                                             </tr>\
                                         </table>\
                                     </div>\
                                 </div>\
                                 <div class="amount-boxes">\
                                     <form onsubmit="return false;"> \
-                                        <input type="hidden" value="100" id="${'data-' + item.id}" >\
-                                        <div id= "${'num-box-' + item.id }" class = "d-none">\
-                                            <input type="button" value="gで指定" name='num' class="change1 num" id = "${'num-change-' + item.id }" data-id="${item.id}" data-carbohydrate="${item.carbohydrate}" data-protain="${item.protain}" data-fat="${item.fat}" data-general_weight="${item.general_weight}">\
-                                            <div class="recipe-text-box" id = "${'num-' + item.id}">\
-                                                <input type="text" name ="${'num-' + item.id}" class="change2 num-text " id = "${'num-text-' + item.id}" data-id="${item.id}" data-carbohydrate="${item.carbohydrate}" data-protain="${item.protain}" data-fat="${item.fat}" data-general_weight="${item.general_weight}">\
+                                        <input type="hidden" value="100" id="${'data-' + food.id}" >\
+                                        <div id= "${'num-box-' + food.id }" class = "d-none">\
+                                            <input type="button" value="gで指定" name='num' class="change1 num" id = "${'num-change-' + food.id }" data-id="${food.id}" data-carbohydrate="${food.carbohydrate}" data-protain="${food.protain}" data-fat="${food.fat}" data-general_weight="${food.general_weight}">\
+                                            <div class="recipe-text-box" id = "${'num-' + food.id}">\
+                                                <input type="text" name ="${'num-' + food.id}" class="change2 num-text " id = "${'num-text-' + food.id}" data-id="${food.id}" data-carbohydrate="${food.carbohydrate}" data-protain="${food.protain}" data-fat="${food.fat}" data-general_weight="${food.general_weight}">\
                                                 <p class = "">個</p>\
                                             </div>\
                                         </div>\
-                                        <div id = "${'amount-box-' + item.id}" class="">\
-                                            <input type="button" value="個数で指定" name='amount' class="change3 amount" id = "${'amount-change-' + item.id}" data-id="${item.id}" data-carbohydrate="${item.carbohydrate}" data-protain="${item.protain}" data-fat="${item.fat}" data-general_weight="${item.general_weight}">\
-                                            <div class="recipe-text-box" id = "${'amount-' + item.id}">\
-                                                <input type="text" name ="${'amount-' + item.id}" class = "change4 amount-text" id = "${'amount-text-' + item.id}" value=100 data-id="${item.id}" data-carbohydrate="${item.carbohydrate}" data-protain="${item.protain}" data-fat="${item.fat}" data-general_weight="${item.general_weight}">\
+                                        <div id = "${'amount-box-' + food.id}" class="">\
+                                            <input type="button" value="個数で指定" name='amount' class="change3 amount" id = "${'amount-change-' + food.id}" data-id="${food.id}" data-carbohydrate="${food.carbohydrate}" data-protain="${food.protain}" data-fat="${food.fat}" data-general_weight="${food.general_weight}">\
+                                            <div class="recipe-text-box" id = "${'amount-' + food.id}">\
+                                                <input type="text" name ="${'amount-' + food.id}" class = "change4 amount-text" id = "${'amount-text-' + food.id}" value=100 data-id="${food.id}" data-carbohydrate="${food.carbohydrate}" data-protain="${food.protain}" data-fat="${food.fat}" data-general_weight="${food.general_weight}">\
+                                                <p>g</p>\
+                                            </div>\
+                                        </div>\
+                                    </form>\
+                                </div>\
+                            </div>\
+                            <div class="food-submit">\
+                                <button type="submit" class="btn search-btn">＋</button>\
+                            </div>\
+                        </div>\
+                    </form>
+                    `);
+                    
+                })
+
+                // 登録編集画面に食材を追加
+                $.each(data.foods,function(key,food){
+                    var energy= food.carbohydrate * 4 + food.protain * 4 + food.fat * 9;
+                    $("#edit-foods").append(`\
+                    <form action="/add_food/edit/${recipe_id}/${food.id}" method="get">\
+                        <div class="food-item">\
+                            <div class="food-main">\
+                                <div class="food-image recipe-image">\
+                                    <img src="/${food.image}" alt="" class="">\
+                                </div>\
+                                <div class="food-info recipe-info">\
+                                    <div class="info-container">\
+                                        <div class="mb-2 hide">\
+                                            ${food.name} \
+                                        </div>\
+                                        <p class="hide">100gあたり(1 ${food.unit} ${food.general_weight } g )</p>\
+                                        <table class="food-table">\
+                                            <tr class="text-right">\
+                                                <td height="1rem" width="68">エネルギー：</td>\
+                                                <td id="${'energy-' + food.id}">${energy}kcal</td>\
+                                            </tr>\
+                                            <tr class="text-right">\
+                                                <td height="1rem" width="68">炭水化物：</td>\
+                                                <td id="${'carbohydrate-' + food.id}">${food.carbohydrate}g</td>\
+                                            </tr>\
+                                            <tr class="text-right">\
+                                                <td width="68">タンパク質：</td>\
+                                                <td id="${'protain-' + food.id}">${food.protain}g</td>\
+                                            </tr>\
+                                            <tr class="text-right">\
+                                                <td width="68">脂質：</td>\
+                                                <td id="${'fat-' + food.id}">${food.fat}}g</td>\
+                                            </tr>\
+                                        </table>\
+                                    </div>\
+                                </div>\
+                                <div class="amount-boxes">\
+                                    <form onsubmit="return false;"> \
+                                        <input type="hidden" value="100" id="${'data-' + food.id}" >\
+                                        <div id= "${'num-box-' + food.id }" class = "d-none">\
+                                            <input type="button" value="gで指定" name='num' class="change1 num" id = "${'num-change-' + food.id }" data-id="${food.id}" data-carbohydrate="${food.carbohydrate}" data-protain="${food.protain}" data-fat="${food.fat}" data-general_weight="${food.general_weight}">\
+                                            <div class="recipe-text-box" id = "${'num-' + food.id}">\
+                                                <input type="text" name ="${'num-' + food.id}" class="change2 num-text " id = "${'num-text-' + food.id}" data-id="${food.id}" data-carbohydrate="${food.carbohydrate}" data-protain="${food.protain}" data-fat="${food.fat}" data-general_weight="${food.general_weight}">\
+                                                <p class = "">個</p>\
+                                            </div>\
+                                        </div>\
+                                        <div id = "${'amount-box-' + food.id}" class="">\
+                                            <input type="button" value="個数で指定" name='amount' class="change3 amount" id = "${'amount-change-' + food.id}" data-id="${food.id}" data-carbohydrate="${food.carbohydrate}" data-protain="${food.protain}" data-fat="${food.fat}" data-general_weight="${food.general_weight}">\
+                                            <div class="recipe-text-box" id = "${'amount-' + food.id}">\
+                                                <input type="text" name ="${'amount-' + food.id}" class = "change4 amount-text" id = "${'amount-text-' + food.id}" value=100 data-id="${food.id}" data-carbohydrate="${food.carbohydrate}" data-protain="${food.protain}" data-fat="${food.fat}" data-general_weight="${food.general_weight}">\
                                                 <p>g</p>\
                                             </div>\
                                         </div>\
@@ -378,7 +450,189 @@ $(window).on("scroll", function () {
             });
     }
 
+     // Recipeコンテンツ追加処理
+     function ajaxAddContentRecipe() {
+        // 追加コンテンツ
+        var add_content = "";
+        // コンテンツ件数           
+        var count =  parseInt($("#count").val());
+        //URLのパラメータ取得
+        var myrecipe = $('#myrecipe').val(); 
+        var keyword = $('#keyword').val(); 
+        var clear = $('#clear').val();
+        var category_id = $('#category_id').val();
+        var date = $('#date').val();
+        // ajax処理
+        $.ajax({
+            headers: { //HTTPヘッダ情報をヘッダ名と値のマップで記述
+                'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+            },  //↑name属性がcsrf-tokenのmetaタグのcontent属性の値を取得
+            url: '/addrecipe', //通信先アドレスで、このURLをあとでルートで設定します
+            method: 'GET', //HTTPメソッドの種別を指定します。1.9.0以前の場合はtype:を使用。
+            datatype: "json",
+            data: { //サーバーに送信するデータ
+                'count' : count,
+                'myrecipe' : myrecipe,
+                'keyword' : keyword,
+                'clear' : clear,
+                'category_id' : category_id,
+                'date' : date,
+            },
+            })
+            //通信成功した時の処理
+            .done(function (data) {
+                // 管理者画面に食材を追加
+                $.each(data.recipes,function(key,recipe){
+                    console.log(data);
+                    var text1 = '';
+                    var text2 = '';
+                    var text3 = '';
+                    var text4 = '';
+                    var text5 = '';
+                    text1 =`
+                    <div class="food">
+                        <div class="food-main">
+                            <div class="food-image">
+                                <img src="${recipe.image}" alt="" class="">
+                            </div>
+                            <div class="food-info">
+                                <div class="info-container">
+                                    <div class="mb-2 hide">
+                                        ${recipe.name} 
+                                    </div>
+                                        <table class="food-table">
+                                            <tr class="text-right">
+                                                <td height="1rem" width="68">エネルギー：</td>
+                                                <td>${recipe.energy}kcal</td>
+                                            </tr>
+                                            <tr class="text-right">
+                                                <td height="1rem" width="68">炭水化物：</td>
+                                                <td>${recipe.carbohydrate}g</td>
+                                            </tr>
+                                            <tr class="text-right">
+                                                <td width="68">タンパク質：</td>
+                                                <td>${recipe.protain}g</td>
+                                            </tr>
+                                            <tr class="text-right">
+                                                <td width="68">脂質：</td>
+                                                <td>${recipe.fat}g</td>
+                                            </tr>
+                                        </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="food-submit">
+                    `
+                    if(data.myrecipe_judge[key]){
+                        text2 =`
+                        <a href="/recipe/detail/${recipe.id}">詳細</a>
+                        <a href="/recipe/edit/${recipe.id}">編集</a>
+                        <a href="/recipe/destory/${recipe.id}">消去</a>
+                        `
+                    }
+                        text3 =`
+                            <a href="/recipe/tweet/${recipe.id}"><i class="fab fa-twitter"></i></a>
+                            <div class="like-box">
+                        `
+                    
+                    if(!(data.login_user_like[key])){
+                        text4 =`
+                        <i id = "${recipe.id}" class="${'fas fa-heart like like-' + recipe.id}"></i>
+                        <p class="likes-count likes-count-${recipe.id}">${data.like_counts[key]}</p>
+                            </div>
+                        </div>
+                        `
+                    }else {
+                        text4 =`
+                        <i id = "${recipe.id}" class="${'fas fa-heart like pink like-' + recipe.id}"></i>
+                        <p class="likes-count likes-count-${recipe.id}">${data.like_counts[key]}</p>
+                            </div>
+                        </div>
+                        `
+                    }
+                                
+                    if(data.myrecipe_judge[key]){
+                    text5 = `<div class="ellipse"><p>Myレシピ</p></div>
+                            </div>
+                            `
+                    }
+                    $("#recipes").append(text1 + text2 + text3 + text4 + text5);
+                    
+                })
+                
+                $.each(data.recipes,function(key,recipe){
+                    console.log(data);
+                    var text1 = '';
+                    var text2 = '';
+                    text1 =`
+                    <div class="food">
+                        <div class="food-main">
+                            <div class="food-image">
+                                <img src="/${recipe.image}" alt="" class="">
+                            </div>
+                            <div class="food-info">
+                                <div class="info-container">
+                                    <div class="mb-2 hide">
+                                        ${recipe.name} 
+                                    </div>
+                                        <table class="food-table">
+                                            <tr class="text-right">
+                                                <td height="1rem" width="68">エネルギー：</td>
+                                                <td>${recipe.energy}kcal</td>
+                                            </tr>
+                                            <tr class="text-right">
+                                                <td height="1rem" width="68">炭水化物：</td>
+                                                <td>${recipe.carbohydrate}g</td>
+                                            </tr>
+                                            <tr class="text-right">
+                                                <td width="68">タンパク質：</td>
+                                                <td>${recipe.protain}g</td>
+                                            </tr>
+                                            <tr class="text-right">
+                                                <td width="68">脂質：</td>
+                                                <td>${recipe.fat}g</td>
+                                            </tr>
+                                        </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="food-submit">
+                            <input type="submit" value='登録' formaction="/record/register/${recipe.id}" class='register-button'>
+                            <a href="/recipe/detail/${recipe.id}">詳細</a>
+                    `   
+                    if(data.myrecipe_judge[key]){
+                        text2 = `<div class="ellipse"><p>Myレシピ</p></div>
+                            </div>
+                        </div>`
+                    }
+
+                    $("#register-record").append(text1 + text2);
+                })
+                // // コンテンツ追加
+                // // 取得件数を加算してセット
+                count += data.recipes.length;
+                console.log(data.recipes.length);
+                $("#count").val(count);
+            })
+            //通信失敗した時の処理
+            .fail(function () {
+            console.log('fail'); 
+            });
+    }
+
 });
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 {/* <script>

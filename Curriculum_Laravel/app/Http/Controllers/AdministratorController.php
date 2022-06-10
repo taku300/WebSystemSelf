@@ -16,18 +16,23 @@ class AdministratorController extends Controller
         $category_id = $request->category_id;
         $keyword = $request->keyword;
         $clear = $request->param;
+        $page = 10;
         if($clear){
-            $foods = Food::get();
+            $foods = Food::orderBy('created_at', 'desc')->paginate($page);
         }else if($keyword){
-            $foods = Food::where('name', 'LIKE', "%{$keyword}%")->get();
+            $foods = Food::where('name', 'LIKE', "%{$keyword}%")->orderBy('created_at', 'desc')->paginate($page);
         }else if($category_id){     //並べ替え処理
-            $foods = Food::where('category_id', '=', $category_id)->get();
+            $foods = Food::where('category_id', '=', $category_id)->orderBy('created_at', 'desc')->paginate($page);
         }else{
-            $foods = Food::get();
-        }
+            $foods = Food::orderBy('created_at', 'desc')->paginate($page);
+        }  
+        //  offset(0)->limit(10)
         return view('administrators/ad_home', [
             'categories' => $categories,
             'foods' => $foods,
+            'keyword' => $keyword,
+            'clear' => $clear,
+            'category_id' =>$category_id
         ]);
     }
 

@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class LikeController extends Controller
 {
+    // ajax
     public function like(Request $request) {
         $user_id = Auth::user()->id; //1.ログインユーザーのid取得
         $recipe_id = $request->recipe_id; //2.投稿idの取得

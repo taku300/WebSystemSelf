@@ -54,24 +54,31 @@ class User extends Authenticatable
         $birthday = str_replace('-', '', $user['birthday']);
         $now = date('Ymd');
         $age = floor (( $now - $birthday ) / 10000);
-        // 基礎代謝量
-        if($user['gender'] == '男性'){
-        $basal_metabolic_rate = ( 0.0481 * $user['weight'] + 0.0234 * $user['height'] - 0.0138 * $age - 0.4235 ) * 1000 / 4.186;
+        if($user['exercise_level'] == 1){
+            $exercise_level = 1.5 ;
+        }elseif($user['exercise_level'] == 2){
+            $exercise_level = 1.75;
         }else{
-        $basal_metabolic_rate = ( 0.0481 * $user['weight'] + 0.0234 * $user['height'] - 0.0138 * $age - 0.9708 ) * 1000 / 4.186;
+            $exercise_level = 2.0;
+        }
+        // 基礎代謝量
+        if($user['gender'] == 1){
+        $basal_metabolic_rate = ( 0.0481 * $user['target_weight'] + 0.0234 * $user['height'] - 0.0138 * $age - 0.4235 ) * 1000 / 4.186;
+        }else{
+        $basal_metabolic_rate = ( 0.0481 * $user['target_weight'] + 0.0234 * $user['height'] - 0.0138 * $age - 0.9708 ) * 1000 / 4.186;
         }
         // エネルギー
-        $param['energy'] = floor($basal_metabolic_rate * $user['exercise_level']);
+        $param['energy'] = floor($basal_metabolic_rate * $exercise_level);
         if($age >= 50 && $age <= 60){
-        $param['carbohydrate_lower'] = floor(($param['energy'] * 0.14)/4);
+        $param['protain_lower'] = floor(($param['energy'] * 0.14)/4);
         }else{
-        $param['carbohydrate_lower'] = floor(($param['energy'] * 0.13)/4);
+        $param['protain_lower'] = floor(($param['energy'] * 0.13)/4);
         }
-        $param['carbohydrate_upper'] = floor(($param['energy'] * 0.2)/4);
-        $param['protain_lower'] = floor(($param['energy'] * 0.2)/4);
-        $param['protain_upper'] = floor(($param['energy'] * 0.3)/4);
-        $param['fat_lower'] = floor(($param['energy'] * 0.5)/9);
-        $param['fat_upper'] = floor(($param['energy'] * 0.65)/9);
+        $param['protain_upper'] = floor(($param['energy'] * 0.2)/4);
+        $param['fat_lower'] = floor(($param['energy'] * 0.2)/9);
+        $param['fat_upper'] = floor(($param['energy'] * 0.3)/9);
+        $param['carbohydrate_lower'] = floor(($param['energy'] * 0.5)/4);
+        $param['carbohydrate_upper'] = floor(($param['energy'] * 0.65)/4);
 
         return $param;
     }
@@ -84,21 +91,57 @@ class User extends Authenticatable
         $age = floor (( $now - $birthday ) / 10000);
         $param['energy'] = $energy;
         if($age >= 50 && $age <= 60){
-        $param['carbohydrate_lower'] = floor(($param['energy'] * 0.14)/4);
+        $param['protain_lower'] = floor(($param['energy'] * 0.14)/4);
         }else{
-        $param['carbohydrate_lower'] = floor(($param['energy'] * 0.13)/4);
+        $param['protain_lower'] = floor(($param['energy'] * 0.13)/4);
         }
-        $param['carbohydrate_upper'] = floor(($param['energy'] * 0.2)/4);
-        $param['protain_lower'] = floor(($param['energy'] * 0.2)/4);
-        $param['protain_upper'] = floor(($param['energy'] * 0.3)/4);
-        $param['fat_lower'] = floor(($param['energy'] * 0.5)/9);
-        $param['fat_upper'] = floor(($param['energy'] * 0.65)/9);
+        $param['protain_upper'] = floor(($param['energy'] * 0.2)/4);
+        $param['fat_lower'] = floor(($param['energy'] * 0.2)/9);
+        $param['fat_upper'] = floor(($param['energy'] * 0.3)/9);
+        $param['carbohydrate_lower'] = floor(($param['energy'] * 0.5)/4);
+        $param['carbohydrate_upper'] = floor(($param['energy'] * 0.65)/4);
 
         return $param;
     }
 
     // ログインユーザーの目標値($target)とレシピの合計($sum)からアラートを作る
     public function alert($target, $sum){
+        if($target['carbohydrate_lower'] > $sum['carbohydrate']){
+            $alerts[] = "栄養バランス：炭水化物が少ないです。";
+        }
+        if($target['carbohydrate_upper'] < $sum['carbohydrate']){
+            $alerts[] = "栄養バランス：炭水化物が多いです！";
+        }
+        if($target['protain_lower'] > $sum['protain']){
+            $alerts[] = "栄養バランス：タンパク質が少ないです！";
+        }
+        if($target['protain_upper'] < $sum['protain']){
+            $alerts[] = "栄養バランス：タンパク質が多いです！";
+        }
+        if($target['fat_lower'] > $sum['fat']){
+            $alerts[] = "栄養バランス：脂質が少ないです！";
+        }
+        if($target['fat_upper'] < $sum['fat']){
+            $alerts[] = "栄養バランス：脂質が多いです！";
+        }
+        if(!empty($alerts)){
+            $alerts[] = "バランスの良い食事を心がけましょう！";
+        }else {
+            $alerts[] = "バランスの良い食事です！";
+        }
+        return $alerts;
+    }
+
+    public function alertRecord($target, $sum){
+        $user = Auth::user();
+        if($user->gender == 1){
+            $minimum_protain = 65;
+        }else {
+            $minimum_protain = 50;
+        }
+        if($minimum_protain > $sum['protain']){
+            $alerts[] = "最低量：最低限ひつようタンパク質(" . $minimum_protain . ")を下回っています。";
+        }
         if($target['carbohydrate_lower'] > $sum['carbohydrate']){
             $alerts[] = "栄養バランス：炭水化物が少ないです。";
         }
