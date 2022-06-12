@@ -19,7 +19,8 @@
                                     <div class="mb-2 hide">
                                         {{ $food->name }} 
                                     </div>
-                                    <p class="hide">100gあたり(1 {{ $food->unit }} {{ $food->general_weight }} g )</p>
+                                    <p>分量：{{ $food->amount }} g（ {{ round($food->amount/$food->general_weight , 2) }}個 ）</p>
+                                    <p class="hide">（1 {{ $food->unit }} {{ $food->general_weight }} g )</p>
                                         <table class="food-table">
                                             <tr class="text-right">
                                                 <td height="1rem" width="68">エネルギー：</td>

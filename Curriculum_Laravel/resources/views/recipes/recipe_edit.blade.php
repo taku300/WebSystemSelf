@@ -14,7 +14,7 @@
                         </td>
                         @foreach($categories as $category)
                             <td>    
-                                <button type="button" class="btn search-btn" onclick="location.href='{{ route('recipe.edit', ['id' => $recipe_id, 'category_id' => $category->id]) }}'">{{ $category->category }}</button>
+                                <button type="button" class="btn search-btn" onclick="location.href='{{ route('recipe.edit', [$recipe_id, 'category_id' => $category->id]) }}'">{{ $category->category }}</button>
                             </td>
                         @endforeach
                     </th>
@@ -28,7 +28,7 @@
                         </div>
                     </td>
                     <td valign="middle">
-                        <form action="{{ route('recipe.edit', ['id' => $recipe_id]) }}" method="get">
+                        <form action="{{ route('recipe.edit', [$recipe_id]) }}" method="get">
                             <input type="hidden" id="count" value=10>
                             <input type='hidden' id="keyword" value='{{ $keyword }}'>
                             <input type='hidden' id="clear" value='{{ $clear }}'>
@@ -45,7 +45,7 @@
 
         <div id="edit-foods" class="foods food-items">
             @foreach($foods as $food)
-            <form action="{{ route('add_food.edit', ['recipe_id' => $recipe_id, 'food_id' => $food->id]) }}" method="get">
+            <form action="{{ route('add_food.edit', [$food->id, $recipe_id]) }}" method="get">
                 <div class="food-item">
                     <div class="food-main">
                         <div class="food-image recipe-image">
@@ -153,7 +153,7 @@
                     </div>
                 </div>
                 <div class="food-submit">
-                    <button type="button" class="btn search-btn" onclick="location.href='{{ route('remove_food.edit', ['recipe_id' => $recipe_id, 'food_id' => $food['food_id']] ) }}'">ー</button>
+                    <button type="button" class="btn search-btn" onclick="location.href='{{ route('remove_food.edit', [$food['food_id'], $recipe_id] ) }}'">ー</button>
                 </div>
             </div>
         @endforeach
@@ -201,7 +201,7 @@
                 @endforeach
               </div>
             @endif
-            <form action="{{ route('recipe.edit', ['id' => $recipe_id]) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('recipe.edit', [$recipe_id]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <p class="param-ttl">レシピ名<span class="required">＊</span></p>
                 <input type="text" name='name' class="w-100" value="{{ old('name') ? old('name') : $recipe->name }}">

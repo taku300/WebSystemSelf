@@ -90,10 +90,10 @@ class RegisterController extends Controller
         ]);
     }
     
-    public function addFood(int $food_id, Request $request) {
+    public function addFood(Food $food, Request $request) {
         // session()->forget('add');
         // セッションに入れる準備
-        $food = Food::find($food_id);
+        $food_id = $food->id;
         $name = $food->name;
         $carbohydrate = $food->carbohydrate;
         $protain = $food->protain;
@@ -129,7 +129,8 @@ class RegisterController extends Controller
         return redirect('/registers');
     }
 
-    public function removeFood(int $food_id) {
+    public function removeFood(Food $food) {
+        $food_id = $food->id;
         $add_foods = session('add');
         $length = count($add_foods); 
         // $session_id = array_search($food_id, session('add'));
@@ -245,7 +246,8 @@ class RegisterController extends Controller
         ]);
     }
 
-    public function recordDestory(int $history_id){
+    public function recordDestory(History $history){
+        $history_id = $history->id;
         $history = History::find($history_id);
         $history->delete();
         return redirect('/record');
@@ -295,7 +297,8 @@ class RegisterController extends Controller
         return view('');
     }
 
-    public function createRecord(int $recipe_id, Request $request) {
+    public function createRecord(Recipe $recipe, Request $request) {
+        $recipe_id = $recipe->id;
         $history = new History;
         $history->date = $request->date;
         $history->user_id = Auth::user()->id;
@@ -305,8 +308,8 @@ class RegisterController extends Controller
 
     }
 
-    public function createSession(int $recipe_id){
-        
+    public function createSession(Recipe $recipe){
+        $recipe_id = $recipe->id;
         if(session()->has('add_edit')){
         session()->forget('add_edit');
         }
@@ -336,14 +339,12 @@ class RegisterController extends Controller
             session()->push('add_edit', $data);
             var_dump($data);
         }
-        return redirect(route('recipe.edit', [
-            'id' => $recipe_id,
-        ]));
+        return redirect(route('recipe.edit', [$recipe_id]));
     }
 
-    public function recipeEdit(int $recipe_id, Request $request) {
+    public function recipeEdit(Recipe $recipe, Request $request) {
+        $recipe_id = $recipe->id;
         // session()->forget('add_edit');
-        $recipe = Recipe::find($recipe_id);
         //並び替え検索
         $categories = Category::get();
         $category_id = $request->category_id;
@@ -382,27 +383,28 @@ class RegisterController extends Controller
         //アラートを鳴らす
         $alerts = $user->alert($target, $sum);
 
-    }
+        }
     
-    return view('/recipes/recipe_edit', [
-        'categories' => $categories,
-        'foods' => $foods,
-        'add_foods' => $add_foods,
-        'sum' => $sum,
-        'target' => $target,
-        'alerts' => $alerts,
-        'keyword' => $keyword,
-        'clear' => $clear,
-        'category_id' => $category_id,
-        'recipe_id' => $recipe_id,
-        'recipe' => $recipe,
-    ]);
+        return view('/recipes/recipe_edit', [
+            'categories' => $categories,
+            'foods' => $foods,
+            'add_foods' => $add_foods,
+            'sum' => $sum,
+            'target' => $target,
+            'alerts' => $alerts,
+            'keyword' => $keyword,
+            'clear' => $clear,
+            'category_id' => $category_id,
+            'recipe_id' => $recipe_id,
+            'recipe' => $recipe,
+        ]);
     }
 
-    public function addFoodEdit(int $recipe_id, int $food_id, Request $request) {
+    public function addFoodEdit(Food $food, Recipe $recipe, Request $request) {
         // session()->forget('add_edit');
         // セッションに入れる準備
-        $food = Food::find($food_id);
+        $recipe_id = $recipe->id;
+        $food_id = $food->id;
         $name = $food->name;
         $carbohydrate = $food->carbohydrate;
         $protain = $food->protain;
@@ -435,12 +437,12 @@ class RegisterController extends Controller
             session()->push('add_edit', $data);
         }
         // dd(session('add_edit'));
-        return redirect(route('recipe.edit', [
-            'id' => $recipe_id,
-        ]));
+        return redirect(route('recipe.edit', [$recipe_id]));
     }
 
-    public function removeFoodEdit(int $recipe_id, int $food_id) {
+    public function removeFoodEdit(Food $food, Recipe $recipe) {
+        $recipe_id = $recipe->id;
+        $food_id = $food->id;
         $add_foods = session('add_edit');
         $length = count($add_foods); 
         // $session_id = array_search($food_id, session('add_edit'));
@@ -461,9 +463,7 @@ class RegisterController extends Controller
             session()->push('add_edit', $food);
             }
         }
-        return redirect(route('recipe.edit', [
-            'id' => $recipe_id
-        ]));
+        return redirect(route('recipe.edit', [$recipe_id]));
     }
 
     public function createRecipeEdit(int $recipe_id, CreateRecipe $request) {

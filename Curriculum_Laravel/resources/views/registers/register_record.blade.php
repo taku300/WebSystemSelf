@@ -74,7 +74,7 @@
                     </div>
                 </div>
                 <div class="food-submit">
-                    <input type="submit" value='登録' formaction="{{ route('record.register.get', ['id' => $recipe->id]) }}" class='register-button'>
+                    <input type="submit" value='登録' formaction="{{ route('record.register.get', [$recipe->id]) }}" class='register-button'>
                     <a href="{{ route('recipe.detail', [$recipe->id]) }}">詳細</a>
                 </div>
                 @if($myrecipe_judge[$key])

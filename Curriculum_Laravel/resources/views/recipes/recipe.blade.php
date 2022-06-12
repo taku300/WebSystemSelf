@@ -76,11 +76,11 @@
             </div>
             <div class="food-submit">
                 @if($myrecipe_judge[$key])
-                    <a href="{{ route('recipe.detail', [$recipe->id]) }}">詳細</a>
-                    <a href="{{ route('create.session', [$recipe->id]) }}">編集</a>
-                    <a href="{{ route('recipe.destory', [$recipe->id]) }}">消去</a>
+                <a href="{{ route('create.session', [$recipe->id]) }}">編集</a>
+                <a href="{{ route('recipe.destory', [$recipe->id]) }}">消去</a>
                 @endif
-                <a href="{{ route('tweet', [$recipe->id]) }}"><i class="fab fa-twitter"></i></a>
+                <a href="{{ route('recipe.detail', [$recipe->id]) }}">詳細</a>
+                <a href="https://twitter.com/share?text=栄養計算サイトからレシピ紹介！！%0aレシピ名：{{ $recipe->name }}%0aエネルギー：{{ $recipe->energy }}kcal%0a炭水化物：{{ $recipe->carbohydrate }}g%0aタンパク質：{{ $recipe->protain }}g%0a脂質：{{ $recipe->fat }}g%0aコメント：{{ $recipe->memo }}%0a&hashtags=栄養計算サイト"><i class="fab fa-twitter"></i></a>
                 <div class="like-box">
                     @if(!$login_user_like[$key])
                     <!-- いいねされてないとき -->

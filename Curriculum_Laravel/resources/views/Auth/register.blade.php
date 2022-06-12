@@ -51,15 +51,15 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="target_weight">体重<span class="required">＊</span></label>
+                <label for="target_weight">目標体重<span class="required">＊</span></label>
                 <input type="text" class="form-control w-50" id="target_weight" name="target_weight" value="{{ old('target_weight') }}" />
               </div>
               <div class="form-group">
                 <label for="exercise_level">身体運動レベル<span class="required">＊</span></label>
                 <select name="exercise_level">
-                  <option value=1.5 {{ old('exercise_level') === '1.5' ? 'selected' : '' }}>低い</option>
-                  <option value=1.75 {{ old('exercise_level') === '1.75' ? 'selected' : '' }}>普通</option>
-                  <option value=2.0 {{ old('exercise_level') === '2.0' ? 'selected' : '' }}>高い</option>
+                  <option value=1 {{ old('exercise_level') === '1' ? 'selected' : '' }}>低い</option>
+                  <option value=2 {{ old('exercise_level') === '2' ? 'selected' : '' }}>普通</option>
+                  <option value=3 {{ old('exercise_level') === '3' ? 'selected' : '' }}>高い</option>
                 </select>              
               </div>
               <div class="text-right">

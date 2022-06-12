@@ -69,7 +69,9 @@
                     <button type="button" class="btn btn-danger" onclick="location.href='/recipe'">レシピ一覧</button>
                     <button type="button" class="btn btn-info" onclick="location.href='/record'">食事記録</button>
                     <button type="button" class="btn btn-warning" onclick="location.href='/user_edit'">ユーザー情報編集</button>
+                    @can('admin-higher')
                     <button type="button" class="btn btn-dark" onclick="location.href='{{ route('administrator') }}'">管理者</button>
+                    @endcan
                 </div>
             @endif
         </header>

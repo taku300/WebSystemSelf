@@ -58,8 +58,8 @@
                     <td>{{ $recipe->carbohydrate }}</td>
                     <td>{{ $recipe->protain }}</td>
                     <td>{{ $recipe->fat }}</td>
-                    <td><a href="{{ route('recipe.detail', ['id' => $recipe->id]) }}">詳細</a></td>     
-                    <td><a href="{{ route('record.destory', ['id' => $history_key[$key]]) }}">消去</a></td>     
+                    <td><a href="{{ route('recipe.detail', [$recipe->id]) }}">詳細</a></td>     
+                    <td><a href="{{ route('record.destory', [$history_key[$key]]) }}">消去</a></td>     
                 </tr>
                 @endforeach
                 <tr>

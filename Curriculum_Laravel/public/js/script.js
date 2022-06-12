@@ -525,13 +525,13 @@ $(window).on("scroll", function () {
                     `
                     if(data.myrecipe_judge[key]){
                         text2 =`
-                        <a href="/recipe/detail/${recipe.id}">詳細</a>
-                        <a href="/recipe/edit/${recipe.id}">編集</a>
+                        <a href="/recipe/create_session/${recipe.id}">編集</a>
                         <a href="/recipe/destory/${recipe.id}">消去</a>
                         `
                     }
                         text3 =`
-                            <a href="/recipe/tweet/${recipe.id}"><i class="fab fa-twitter"></i></a>
+                            <a href="/recipe/detail/${recipe.id}">詳細</a>
+                            <a href="https://twitter.com/share?text=栄養計算サイトからレシピ紹介！！%0aレシピ名：${recipe.energy}%0aエネルギー：${recipe.energy}kcal%0a炭水化物：${recipe.carbohydrate}g%0aタンパク質：${recipe.protain}g%0a脂質：${recipe.fat}g%0aコメント：${recipe.memo}%0a&hashtags=栄養計算サイト"><i class="fab fa-twitter"></i></a>
                             <div class="like-box">
                         `
                     

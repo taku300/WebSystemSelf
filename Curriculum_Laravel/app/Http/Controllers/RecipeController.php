@@ -54,6 +54,7 @@ class RecipeController extends Controller
             $login_user_like[] = $likes->where('user_id', '=', Auth::user()->id)->where('recipe_id', '=', $recipe->id)->count() > 0;
             $like_counts[] = $likes->where('recipe_id', '=', $recipe->id)->count();
             $myrecipe_judge[] = Recipe::where('id', '=', $recipe->id)->where('user_id', '=',  Auth::user()->id)->count() > 0;
+
         }
 
         
@@ -82,7 +83,7 @@ class RecipeController extends Controller
         // レシピに含まれる食材を抽出
         $foods = Food::join('recipe_details', 'recipe_details.food_id', '=', 'foods.id')
         ->where('recipe_details.recipe_id', '=', $recipe_id )
-        ->select('foods.*')
+        ->select('foods.*','recipe_details.amount')
         ->get();
         $user = new User;
         //レシピの栄養素の目標値
@@ -98,12 +99,6 @@ class RecipeController extends Controller
             'target' => $target,
             'alerts' => $alerts,
         ]);
-    }
-
-    
-
-    public function newRecipe() {
-        
     }
 
     public function recipeDestory(int $recipe_id) {

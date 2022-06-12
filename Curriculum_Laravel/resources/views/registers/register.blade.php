@@ -45,7 +45,7 @@
 
         <div id="register-foods" class="foods food-items">
             @foreach($foods as $food)
-            <form action="{{ route('add_food', ['id' => $food->id]) }}" method="get">
+            <form action="{{ route('add_food', [$food->id]) }}" method="get">
                 <div class="food-item">
                     <div class="food-main">
                         <div class="food-image recipe-image">
@@ -153,7 +153,7 @@
                     </div>
                 </div>
                 <div class="food-submit">
-                    <button type="button" class="btn search-btn" onclick="location.href='{{ route('remove_food', ['id' => $food['food_id']]) }}'">ー</button>
+                    <button type="button" class="btn search-btn" onclick="location.href='{{ route('remove_food', [$food['food_id']]) }}'">ー</button>
                 </div>
             </div>
         @endforeach

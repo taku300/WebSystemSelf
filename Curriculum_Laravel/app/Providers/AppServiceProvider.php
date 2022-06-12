@@ -25,4 +25,8 @@ class AppServiceProvider extends ServiceProvider
     {
         //
     }
+
+    protected $policies = [
+        'App\Recipe' => 'App\providers\RecipePolicy',
+    ];
 }
