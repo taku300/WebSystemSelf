@@ -101,8 +101,8 @@ class RecipeController extends Controller
         ]);
     }
 
-    public function recipeDestory(int $recipe_id) {
-        $recipe = Recipe::find($recipe_id);
+    public function recipeDestory(Recipe $recipe) {
+        $recipe_id = $recipe->id;
         $recipe->del_flg = 1;
         $recipe->save();
         

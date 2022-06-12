@@ -466,7 +466,8 @@ class RegisterController extends Controller
         return redirect(route('recipe.edit', [$recipe_id]));
     }
 
-    public function createRecipeEdit(int $recipe_id, CreateRecipe $request) {
+    public function createRecipeEdit(Recipe $recipe, CreateRecipe $request) {
+        $recipe_id = $recipe->id;
         if(!session()->has('add_edit')){
             return redirect(route('recipe.edit', [
                 'id' => $recipe_id,
@@ -513,5 +514,6 @@ class RegisterController extends Controller
         return redirect('/recipe');
     }
 
+    
 }
 
