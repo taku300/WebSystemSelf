@@ -24,6 +24,7 @@
         <h3 class='ttl'>今日の食事</h3>
         <div class='d-flex justify-content-between'>
             <form action="/record">
+                @csrf
                 <table>
                     <th>
                         <td width="190" class="text-left">

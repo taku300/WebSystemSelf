@@ -140,7 +140,7 @@ class User extends Authenticatable
             $minimum_protain = 20;
         }
         if($minimum_protain > $sum['protain']){
-            $alerts[] = "最低量：最低限ひつようタンパク質(" . $minimum_protain . ")を下回っています。";
+            $alerts[] = "最低量：最低限ひつようタンパク質(" . $minimum_protain . "g)を下回っています。";
         }
         if($target['carbohydrate_lower'] > $sum['carbohydrate']){
             $alerts[] = "栄養バランス：炭水化物が少ないです。";

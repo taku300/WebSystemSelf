@@ -7,6 +7,7 @@
     </div>
     <table class="mt-1 mb-3">
         <form action="{{ route('recipe') }}" method="get">
+            @csrf
             <tr>
                 <td class="text-right">
                     <div class="search-logo">

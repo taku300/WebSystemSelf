@@ -29,6 +29,7 @@
                     </td>
                     <td valign="middle">
                         <form action="{{ route('registers') }}" method="get">
+                            @csrf
                             <input type="hidden" id="judge" value=1>
                             <input type="hidden" id="count" value=10>
                             <input type='hidden' id="keyword" value='{{ $keyword }}'>
@@ -79,6 +80,7 @@
                         </div>
                         <div class="amount-boxes">
                             <form onsubmit="return false;"> 
+                            @csrf
                                 <input type="hidden" value="100" id="{{'data-' . $food->id}}" >
                                 <div id= "{{ 'num-box-' . $food->id }}" class = "d-none">
                                     <input type="button" value="gで指定" name='num' class="change1 num" id = "{{ 'num-change-' . $food->id }}" data-id="{{ $food->id }}" data-carbohydrate="{{ $food->carbohydrate }}" data-protain="{{ $food->protain }}" data-fat="{{ $food->fat }}" data-general_weight="{{ $food->general_weight }}">

@@ -29,6 +29,7 @@
                     </td>
                     <td valign="middle">
                         <form action="{{ route('recipe.edit', [$recipe_id]) }}" method="get">
+                            @csrf
                             <input type="hidden" id="count" value=10>
                             <input type='hidden' id="keyword" value='{{ $keyword }}'>
                             <input type='hidden' id="clear" value='{{ $clear }}'>
@@ -46,6 +47,7 @@
         <div id="edit-foods" class="foods food-items">
             @foreach($foods as $food)
             <form action="{{ route('add_food.edit', [$food->id, $recipe_id]) }}" method="get">
+                @csrf
                 <div class="food-item">
                     <div class="food-main">
                         <div class="food-image recipe-image">
@@ -79,6 +81,7 @@
                         </div>
                         <div class="amount-boxes">
                             <form onsubmit="return false;"> 
+                            @csrf
                                 <input type="hidden" value="100" id="{{'data-' . $food->id}}" >
                                 <div id= "{{ 'num-box-' . $food->id }}" class = "d-none">
                                     <input type="button" value="gで指定" name='num' class="change1 num" id = "{{ 'num-change-' . $food->id }}" data-id="{{ $food->id }}" data-carbohydrate="{{ $food->carbohydrate }}" data-protain="{{ $food->protain }}" data-fat="{{ $food->fat }}" data-general_weight="{{ $food->general_weight }}">

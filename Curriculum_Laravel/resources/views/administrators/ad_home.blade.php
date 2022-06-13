@@ -27,6 +27,7 @@
             </td>
             <td valign="middle">
                 <form action="{{ route('administrator') }}" method="get">
+                    @csrf
                     <input type="hidden" id="judge" value=1>
                     <input type="hidden" id="count" value=10>
                     <input type='hidden' id="keyword" value='{{ $keyword }}'>

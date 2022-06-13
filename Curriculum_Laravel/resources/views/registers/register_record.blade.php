@@ -7,6 +7,7 @@
     </div>
     <table class="mt-1 mb-3">
         <form action="{{ route('record.register') }}" method="get">
+            @csrf
             <tr>
                 <td class="text-right">
                     <div class="search-logo">
@@ -39,6 +40,7 @@
     </table>
     <p>日付を選択してください。</p>
     <form>
+        @csrf
         <input type="date" value='{{ date("Y-m-d") }}' name='date'>
         <div id="register-record" class="foods">
             @foreach($recipes as $key => $recipe)
