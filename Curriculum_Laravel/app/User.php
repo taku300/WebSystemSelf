@@ -135,9 +135,9 @@ class User extends Authenticatable
     public function alertRecord($target, $sum){
         $user = Auth::user();
         if($user->gender == 1){
-            $minimum_protain = 65;
+            $minimum_protain = 20;
         }else {
-            $minimum_protain = 50;
+            $minimum_protain = 20;
         }
         if($minimum_protain > $sum['protain']){
             $alerts[] = "最低量：最低限ひつようタンパク質(" . $minimum_protain . ")を下回っています。";

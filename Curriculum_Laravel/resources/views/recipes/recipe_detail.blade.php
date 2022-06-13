@@ -4,6 +4,11 @@
     <div class="d-flex">
         <div class="recipe- detail-left w-50">
             <div class="container">
+                @if($recipe->del_flg == 1)
+                <div class="text-danger">
+                    <p>※このレシピはすでに消去されています。</p>
+                </div>
+                @endif
                 <div class="container foods-name">
                     <p class="param-ttl">食材</p>
                 </div>
@@ -19,24 +24,24 @@
                                     <div class="mb-2 hide">
                                         {{ $food->name }} 
                                     </div>
-                                    <p>分量：{{ $food->amount }} g（ {{ round($food->amount/$food->general_weight , 2) }}個 ）</p>
+                                    <p>分量：{{ $food->amount }} g（ {{ round($food->amount/$food->general_weight , 2) }}{{ $food->unit }} ）</p>
                                     <p class="hide">（1 {{ $food->unit }} {{ $food->general_weight }} g )</p>
                                         <table class="food-table">
                                             <tr class="text-right">
                                                 <td height="1rem" width="68">エネルギー：</td>
-                                                <td>{{ $food->carbohydrate * 4 + $food->protain * 4 + $food->fat * 9 }}kcal</td>
+                                                <td>{{ round($food->carbohydrate  * $food->amount/100 * 4 + $food->protain  * $food->amount/100 * 4 + $food->fat  * $food->amount/100 * 9, 2) }}kcal</td>
                                             </tr>
                                             <tr class="text-right">
                                                 <td height="1rem" width="68">炭水化物：</td>
-                                                <td>{{ $food->carbohydrate }}g</td>
+                                                <td>{{ round($food->carbohydrate  * $food->amount/100, 2) }}g</td>
                                             </tr>
                                             <tr class="text-right">
                                                 <td width="68">タンパク質：</td>
-                                                <td>{{ $food->protain }}g</td>
+                                                <td>{{ round($food->protain  * $food->amount/100, 2) }}g</td>
                                             </tr>
                                             <tr class="text-right">
                                                 <td width="68">脂質：</td>
-                                                <td>{{ $food->fat }}g</td>
+                                                <td>{{ round($food->fat  * $food->amount/100, 2) }}g</td>
                                             </tr>
                                         </table>
                                 </div>

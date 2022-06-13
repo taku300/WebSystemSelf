@@ -62,11 +62,11 @@ class RegisterController extends Controller
             $add_foods = session('add');
             foreach($add_foods as $food){
                 $amount = $food['amount'];
-                $carbohydrate += $food['carbohydrate'] * $amount / 100; 
-                $protain += $food['protain'] * $amount / 100; 
-                $fat += $food['fat'] * $amount / 100;     
+                $carbohydrate += round($food['carbohydrate'] * $amount / 100, 2); 
+                $protain += round($food['protain'] * $amount / 100, 2); 
+                $fat += round($food['fat'] * $amount / 100, 2);     
             }
-            $energy += $carbohydrate * 4 + $protain * 4 + $fat * 9;
+            $energy += round($carbohydrate * 4 + $protain * 4 + $fat * 9, 2);
             $sum = compact("energy", "carbohydrate", "protain", "fat");
             $user = new User;
             //一食の目標値(栄養バランス)を計算
@@ -371,11 +371,11 @@ class RegisterController extends Controller
             $add_foods = session('add_edit');
             foreach($add_foods as $food){
             $amount = $food['amount'];
-            $carbohydrate += $food['carbohydrate'] * $amount / 100; 
-            $protain += $food['protain'] * $amount / 100; 
-            $fat += $food['fat'] * $amount / 100;     
-        }
-        $energy += $carbohydrate * 4 + $protain * 4 + $fat * 9;
+            $carbohydrate += round($food['carbohydrate'] * $amount / 100, 2); 
+            $protain += round($food['protain'] * $amount / 100, 2); 
+            $fat += round($food['fat'] * $amount / 100, 2);     
+            }
+        $energy += round($carbohydrate * 4 + $protain * 4 + $fat * 9, 2);
         $sum = compact("energy", "carbohydrate", "protain", "fat");
         $user = new User;
         //一食の目標値(栄養バランス)を計算

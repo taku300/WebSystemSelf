@@ -20,10 +20,10 @@ class RecipeDetail extends Model
         $recipes = RecipeDetail::join('foods', 'recipe_details.food_id', '=', 'foods.id')
         ->join('recipes', 'recipe_details.recipe_id', '=', 'recipes.id')
         ->select('recipes.id', 'recipes.name', 'recipes.image', 'recipes.memo', 'recipes.user_id', 'recipe_details.recipe_id', 'recipes.created_at')
-        ->selectRaw('SUM(foods.carbohydrate) * 4 + SUM(foods.protain) * 4 + SUM(foods.fat) * 9 AS energy')
-        ->selectRaw('SUM(foods.carbohydrate) AS carbohydrate')
-        ->selectRaw('SUM(foods.protain) AS protain')
-        ->selectRaw('SUM(foods.fat) AS fat')
+        ->selectRaw('round(SUM(foods.carbohydrate * recipe_details.amount/100) * 4 + SUM(foods.protain * recipe_details.amount/100) * 4 + SUM(foods.fat * recipe_details.amount/100) * 9, 2) AS energy')
+        ->selectRaw('round(SUM(foods.carbohydrate * recipe_details.amount/100), 2) AS carbohydrate')
+        ->selectRaw('round(SUM(foods.protain * recipe_details.amount/100), 2) AS protain')
+        ->selectRaw('round(SUM(foods.fat * recipe_details.amount/100), 2) AS fat')
         ->where('recipes.del_flg', '=', 0)
         ->groupBy('recipes.id')
         ->orderBy('created_at', 'desc');
@@ -36,10 +36,10 @@ class RecipeDetail extends Model
         $recipes = RecipeDetail::join('foods', 'recipe_details.food_id', '=', 'foods.id')
         ->join('recipes', 'recipe_details.recipe_id', '=', 'recipes.id')
         ->select('recipes.id', 'recipes.name', 'recipes.image', 'recipes.memo', 'recipes.user_id', 'recipe_details.recipe_id', 'recipes.created_at')
-        ->selectRaw('SUM(foods.carbohydrate) * 4 + SUM(foods.protain) * 4 + SUM(foods.fat) * 9 AS energy')
-        ->selectRaw('SUM(foods.carbohydrate) AS carbohydrate')
-        ->selectRaw('SUM(foods.protain) AS protain')
-        ->selectRaw('SUM(foods.fat) AS fat')
+        ->selectRaw('round(SUM(foods.carbohydrate * recipe_details.amount/100) * 4 + SUM(foods.protain * recipe_details.amount/100) * 4 + SUM(foods.fat * recipe_details.amount/100) * 9, 2) AS energy')
+        ->selectRaw('round(SUM(foods.carbohydrate * recipe_details.amount/100), 2) AS carbohydrate')
+        ->selectRaw('round(SUM(foods.protain * recipe_details.amount/100), 2) AS protain')
+        ->selectRaw('round(SUM(foods.fat * recipe_details.amount/100), 2) AS fat')
         ->groupBy('recipes.id');
         // dd(\DB::getQueryLog());
         return $recipes;

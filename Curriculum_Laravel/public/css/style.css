@@ -200,9 +200,11 @@ header {
 .food-table {
     width: 100%;
 }
-.food-table td {
+.food-table td, .food-table th {
     font-size: 0.8rem;
+    height: 1rem;
     border-bottom: solid;
+    overflow: hidden;
 }
 
 @media screen and (max-width:576px) {
@@ -221,6 +223,8 @@ header {
 }
 
 /* 食材登録画面 */
+
+
 
 .food-img-box {
     display: flex;
@@ -344,8 +348,9 @@ header {
 
 .recipe-text-box p{
     position: absolute;
-    top: 17%;
-    right: 16%;
+    top: 11%;
+    left: 70%;
+    width: 30px;
     font-size: 0.8rem;
 }
 

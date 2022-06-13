@@ -311,7 +311,7 @@ $(window).on("scroll", function () {
                 })
                 // 登録画面に食材を追加
                 $.each(data.foods,function(key,food){
-                    var energy= food.carbohydrate * 4 + food.protain * 4 + food.fat * 9;
+                    var energy= Math.round(food.carbohydrate * 4 + food.protain * 4 + food.fat * 9, 1);
                     $("#register-foods").append(`\
                     <form action="/add_food/${food.id}" method="get">\
                         <div class="food-item">\
@@ -352,7 +352,7 @@ $(window).on("scroll", function () {
                                             <input type="button" value="gで指定" name='num' class="change1 num" id = "${'num-change-' + food.id }" data-id="${food.id}" data-carbohydrate="${food.carbohydrate}" data-protain="${food.protain}" data-fat="${food.fat}" data-general_weight="${food.general_weight}">\
                                             <div class="recipe-text-box" id = "${'num-' + food.id}">\
                                                 <input type="text" name ="${'num-' + food.id}" class="change2 num-text " id = "${'num-text-' + food.id}" data-id="${food.id}" data-carbohydrate="${food.carbohydrate}" data-protain="${food.protain}" data-fat="${food.fat}" data-general_weight="${food.general_weight}">\
-                                                <p class = "">個</p>\
+                                                <p class = "">${food.unit}</p>\
                                             </div>\
                                         </div>\
                                         <div id = "${'amount-box-' + food.id}" class="">\
@@ -376,7 +376,7 @@ $(window).on("scroll", function () {
 
                 // 登録編集画面に食材を追加
                 $.each(data.foods,function(key,food){
-                    var energy= food.carbohydrate * 4 + food.protain * 4 + food.fat * 9;
+                    var energy= Math.round(food.carbohydrate * 4 + food.protain * 4 + food.fat * 9, 1);
                     $("#edit-foods").append(`\
                     <form action="/add_food/edit/${recipe_id}/${food.id}" method="get">\
                         <div class="food-item">\
@@ -405,7 +405,7 @@ $(window).on("scroll", function () {
                                             </tr>\
                                             <tr class="text-right">\
                                                 <td width="68">脂質：</td>\
-                                                <td id="${'fat-' + food.id}">${food.fat}}g</td>\
+                                                <td id="${'fat-' + food.id}">${food.fat}g</td>\
                                             </tr>\
                                         </table>\
                                     </div>\
@@ -417,7 +417,7 @@ $(window).on("scroll", function () {
                                             <input type="button" value="gで指定" name='num' class="change1 num" id = "${'num-change-' + food.id }" data-id="${food.id}" data-carbohydrate="${food.carbohydrate}" data-protain="${food.protain}" data-fat="${food.fat}" data-general_weight="${food.general_weight}">\
                                             <div class="recipe-text-box" id = "${'num-' + food.id}">\
                                                 <input type="text" name ="${'num-' + food.id}" class="change2 num-text " id = "${'num-text-' + food.id}" data-id="${food.id}" data-carbohydrate="${food.carbohydrate}" data-protain="${food.protain}" data-fat="${food.fat}" data-general_weight="${food.general_weight}">\
-                                                <p class = "">個</p>\
+                                                <p class = "">${food.unit}</p>\
                                             </div>\
                                         </div>\
                                         <div id = "${'amount-box-' + food.id}" class="">\

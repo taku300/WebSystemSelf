@@ -60,7 +60,7 @@
                                 <table class="food-table">
                                     <tr class="text-right">
                                         <td height="1rem" width="68">エネルギー：</td>
-                                        <td id="{{ 'energy-' . $food->id }}">{{ $food->carbohydrate * 4 + $food->protain * 4 + $food->fat * 9 }}kcal</td>
+                                        <td id="{{ 'energy-' . $food->id }}">{{ round($food->carbohydrate * 4 + $food->protain * 4 + $food->fat * 9, 2) }}kcal</td>
                                     </tr>
                                     <tr class="text-right">
                                         <td height="1rem" width="68">炭水化物：</td>
@@ -84,7 +84,7 @@
                                     <input type="button" value="gで指定" name='num' class="change1 num" id = "{{ 'num-change-' . $food->id }}" data-id="{{ $food->id }}" data-carbohydrate="{{ $food->carbohydrate }}" data-protain="{{ $food->protain }}" data-fat="{{ $food->fat }}" data-general_weight="{{ $food->general_weight }}">
                                     <div class="recipe-text-box" id = "{{ 'num-' . $food->id }}">
                                         <input type="text" name ="{{ 'num-' . $food->id }}" class="change2 num-text" id = "{{ 'num-text-' . $food->id }}" data-id="{{ $food->id }}" data-carbohydrate="{{ $food->carbohydrate }}" data-protain="{{ $food->protain }}" data-fat="{{ $food->fat }}" data-general_weight="{{ $food->general_weight }}">
-                                        <p class = "">個</p>
+                                        <p class = "">{{ $food->unit }}</p>
                                     </div>
                                 </div>
                                 <div id = "{{ 'amount-box-' . $food->id }}" class="">
@@ -126,7 +126,7 @@
                             <table class="food-table">
                                 <tr class="text-right">
                                     <td height="1rem" width="68">エネルギー：</td>
-                                    <td>{{ $food["carbohydrate"] * $food["amount"] / 100 * 4 + $food["protain"] * $food["amount"] / 100 * 4 + $food["fat"] * $food["amount"] / 100 * 9 }}kcal</td>
+                                    <td>{{ round($food["carbohydrate"] * $food["amount"] / 100 * 4 + $food["protain"] * $food["amount"] / 100 * 4 + $food["fat"] * $food["amount"] / 100 * 9, 2) }}kcal</td>
                                 </tr>
                                 <tr class="text-right">
                                     <td>炭水化物：</td>
