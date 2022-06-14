@@ -2,16 +2,13 @@ $(document).ready(function() {
 
     // 画像を選択したときに動的に表示
     $('.food-img-content input').on('change', function (ev) {
-
         //コンソールタブで適切に処理が動いているか確認
         console.log("image is changed");
-    
         //このFileReaderが画像を読み込む上で大切
         const reader = new FileReader();
         //--ファイル名を取得
         // ev.targetがimput そのファイル名を取得
         // const fileName = ev.target.files[0].name;
-    
         //--画像が読み込まれた時の動作を記述
         // target.result　imputの読み込み結果　　
         // HTMLの書き換え
@@ -21,7 +18,6 @@ $(document).ready(function() {
         // readerクラスのメソッド
         // readAsDataURL(blob) – データを base64 データurl にエンコードします　　
         // データurl：小さなファイルをインラインで文書に埋め込むことができます
-    
         reader.readAsDataURL(this.files[0]);
         //画像を文章に置き換えてそれを読み込むことでブラウザ上で埋め込みを可能にしている。
     })
@@ -37,17 +33,6 @@ $(document).ready(function() {
         }
     })
 
-    // $('div[id^="num"] input').on('keyup', function(ev){
-    //     const $a = $('div[id^="num"] input').next().val();
-    //     // const $this = $(this);
-    //     // const height = $this.val();
-    //     // const rc_weight = Math.round(22*((height/100)**2));
-    //     console.log($a);
-    //     // if (height.match(/^[0-9]+$/)){
-    //     // $(".recommendation-weight p").text("推奨体重：" + rc_weight + "kg");
-    //     // }
-    // })
-
     // いいね機能
     $(document).on('click','.like', function(e) {
         var e = e || window.event;
@@ -55,9 +40,7 @@ $(document).ready(function() {
         var recipe_id = recipe.id;
         var $add_like = $('.like-' + recipe_id);
         var $add_like = $('.like-' + recipe_id);
-        var $likes_count = $('.likes-count-' + recipe_id);
-        
-        
+        var $likes_count = $('.likes-count-' + recipe_id);  
         //ajax処理スタート
         $.ajax({
             headers: { //HTTPヘッダ情報をヘッダ名と値のマップで記述
@@ -147,7 +130,6 @@ $(document).ready(function() {
             $fat_id.text(fat_change + 'g');
             }
         });
-
         // gで指定ボタン
         $(document).on('click','.change1',function(e){
             var e = e || window.event;
@@ -176,7 +158,6 @@ $(document).ready(function() {
             $protain_id.text(protain + 'g');
             $fat_id.text(fat + 'g');
         });
-
         // 個数で指定ボタン
         $(document).on('click','.change3',function(e){
             var e = e || window.event;
@@ -210,8 +191,6 @@ $(document).ready(function() {
             $fat_id.text(fat_num + 'g')
             
         });
-
-
 
     // 食材無限スクロール
     // スクロールされた時に実行
