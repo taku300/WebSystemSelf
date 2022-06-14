@@ -10,6 +10,7 @@ use App\Recipe;
 use Illuminate\Support\Facades\Auth;
 class AjaxController extends Controller
 {
+    //食事無限スクロール
     public function addFood(Request $request) {
         $count = intval($request->count);
         $keyword = $request->keyword;
@@ -29,6 +30,7 @@ class AjaxController extends Controller
         return response()->json($data);
     }
 
+    //レシピ無限スクロール
     public function addRecipe(Request $request) {
         $count = intval($request->count);
         $myrecipe = $request->myrecipe;
@@ -58,15 +60,18 @@ class AjaxController extends Controller
             $recipe_details = new RecipeDetail;
             $recipes = $recipe_details->calNutrients()->offset($count)->limit($page)->get();
         }
-        
+        //変数の初期設定
         $login_user_like = array();
         $like_counts = array();
         $myrecipe_judge = array();
         // いいねの判定 myrecipe判定
         $likes = Like::get();
         foreach($recipes as $recipe){
+            //ログインユーザがいいねしているか確認
             $login_user_like[] = $likes->where('user_id', '=', Auth::user()->id)->where('recipe_id', '=', $recipe->id)->count() > 0;
+            //いいねの数を取得
             $like_counts[] = $likes->where('recipe_id', '=', $recipe->id)->count();
+            //自分のレシピかどうか判定
             $myrecipe_judge[] = Recipe::where('id', '=', $recipe->id)->where('user_id', '=',  Auth::user()->id)->count() > 0;
         }
         $data = compact("recipes", "login_user_like", "like_counts", "myrecipe_judge");

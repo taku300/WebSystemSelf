@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 
 class RecipeController extends Controller
 {
+    // レシピ一覧画面
     public function recipe(Request $request) {
          // session()->forget('add');
         //並び替え検索
@@ -34,10 +35,10 @@ class RecipeController extends Controller
         }else if($keyword || $date){   //検索ワードで絞る
             $recipe_details = new RecipeDetail;
             $recipes = $recipe_details->calNutrients();
-            if($keyword){
+            if($keyword){ //キーワードで検索
             $recipes = $recipes->where('recipes.name', 'LIKE', "%{$keyword}%");
             }
-            if($date){
+            if($date){ //日にちで検索
                 $recipes = $recipes->where('recipes.created_at', 'LIKE', "%{$date}%");
             }
             $recipes = $recipes->paginate($page);
@@ -45,6 +46,7 @@ class RecipeController extends Controller
             $recipe_details = new RecipeDetail;
             $recipes = $recipe_details->calNutrients()->paginate($page);
         }
+        //変数の初期化
         $login_user_like = array();
         $like_counts = array();
         $myrecipe_judge = array();
@@ -56,9 +58,6 @@ class RecipeController extends Controller
             $myrecipe_judge[] = Recipe::where('id', '=', $recipe->id)->where('user_id', '=',  Auth::user()->id)->count() > 0;
 
         }
-
-        
-
         return view('recipes/recipe', [
             'recipes' => $recipes,
             'login_user_like' => $login_user_like,
@@ -73,11 +72,13 @@ class RecipeController extends Controller
         ]);
     }
 
-    public function recipeDetail(int $recipe_id) {
+    // レシピ詳細画面
+    public function recipeDetail(Recipe $recipe) {
+        $recipe_id = $recipe->id;
         $recipe_details = new RecipeDetail;
         // レシピの栄養素の合計を計算
-        $recipes = $recipe_details->calNutrients();
-        $recipe = $recipes->where('recipe_id', '=', $recipe_id)->first();
+        $recipes = $recipe_details->calNutrients(); //RecipeDetailクラスより継承
+        $recipe = $recipes->where('recipe_id', '=', $recipe_id)->first(); //レシピidと一致するものを取得
 
         //  \DB::enableQueryLog();
         // レシピに含まれる食材を抽出
@@ -87,12 +88,9 @@ class RecipeController extends Controller
         ->get();
         $user = new User;
         //レシピの栄養素の目標値
-        $target = $user->calRecipeTarget($recipe->energy);
-        $alerts = $user->alert($target,$recipe);
-
-
+        $target = $user->calRecipeTarget($recipe->energy); //userクラスより継承　各ユーザーの目標値を計算
+        $alerts = $user->alert($target,$recipe); //userクラスより継承　作成したレシピに対してアラートを算出
         // dd(\DB::getQueryLog());
-
         return view('recipes/recipe_detail', [
             'recipe' => $recipe,
             'foods' => $foods,
@@ -101,11 +99,12 @@ class RecipeController extends Controller
         ]);
     }
 
+    // レシピ消去画面
     public function recipeDestory(Recipe $recipe) {
+        //レシピを理論消去する。
         $recipe_id = $recipe->id;
         $recipe->del_flg = 1;
         $recipe->save();
-        
         return redirect('/recipe');
 
     }
