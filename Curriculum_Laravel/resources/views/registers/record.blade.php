@@ -55,20 +55,20 @@
                 @foreach($recipes as $key => $recipe)
                 <tr>
                     <td>{{ $recipe->name }}</td>
-                    <td>{{ $recipe->energy }}</td>
-                    <td>{{ $recipe->carbohydrate }}</td>
-                    <td>{{ $recipe->protain }}</td>
-                    <td>{{ $recipe->fat }}</td>
+                    <td>{{ $recipe->energy }}kcal</td>
+                    <td>{{ $recipe->carbohydrate }}g</td>
+                    <td>{{ $recipe->protain }}g</td>
+                    <td>{{ $recipe->fat }}g</td>
                     <td><a href="{{ route('recipe.detail', [$recipe->id]) }}">詳細</a></td>     
                     <td><a href="{{ route('record.destory', [$history_key[$key]]) }}">消去</a></td>     
                 </tr>
                 @endforeach
                 <tr>
                     <th>合計</th>
-                    <th>{{ $sum['energy'] }}</th>
-                    <th>{{ $sum['carbohydrate'] }}</th>
-                    <th>{{ $sum['protain'] }}</th>
-                    <th>{{ $sum['fat'] }}</th>
+                    <th>{{ $sum['energy'] }}kcal</th>
+                    <th>{{ $sum['carbohydrate'] }}g</th>
+                    <th>{{ $sum['protain'] }}g</th>
+                    <th>{{ $sum['fat'] }}g</th>
                     <th style="text-align: center">ー</th>
                     <th style="text-align: center">ー</th>
                 </tr>

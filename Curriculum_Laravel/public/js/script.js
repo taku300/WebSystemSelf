@@ -66,73 +66,9 @@ $(document).ready(function() {
             });
     });        
         
-        // グラムを入力すると変換
-        $(document).on('keyup','.change4',function(e){
-            var e = e || window.event;
-            var food = e.target || e.stcElement;
-            var food_id = food.dataset.id;
-            var carbohydrate = food.dataset.carbohydrate;
-            var protain = food.dataset.protain;
-            var fat = food.dataset.fat;
-            var general_weight = food.dataset.general_weight;
-            var energy = carbohydrate * 4 + protain * 4 + fat * 9;
-            var $energy_id = $('#energy-' + food_id);
-            var $carbohydrate_id = $('#carbohydrate-' + food_id);
-            var $protain_id = $('#protain-' + food_id);
-            var $fat_id = $('#fat-' + food_id);
-            var $gram = $('#amount-text-' + food_id);
-            var $num = $('#num-text-' + food_id);
-            var $num_change = $('#num-change-' + food_id);
-            var $amount_change = $('#amount-change-' + food_id);
-            var $num_box = $('#num-box-' + food_id);
-            var $amount_box = $('#amount-box-' + food_id);
-            var g = Number($gram.val());   
-            if ($.isNumeric(g)){
-                var energy_change = Math.round((energy * g / 100)*10)/10;
-                var carbohydrate_change = Math.round((carbohydrate * g / 100)*10)/10;
-                var protain_change = Math.round((protain * g / 100)*10)/10;
-                var fat_change = Math.round((fat * g / 100)*10)/10;
-                $energy_id.text(energy_change + 'kcal');
-                $carbohydrate_id.text(carbohydrate_change + 'g');
-                $protain_id.text(protain_change + 'g');
-                $fat_id.text(fat_change + 'g');
-            }
-        });
-        // gを入力すると変換
-        $(document).on("keyup",'.change2',function(e){
-            var e = e || window.event;
-            var food = e.target || e.stcElement;
-            var food_id = food.dataset.id;
-            var carbohydrate = food.dataset.carbohydrate;
-            var protain = food.dataset.protain;
-            var fat = food.dataset.fat;
-            var general_weight = food.dataset.general_weight;
-            var energy = carbohydrate * 4 + protain * 4 + fat * 9;
-            var $energy_id = $('#energy-' + food_id);
-            var $carbohydrate_id = $('#carbohydrate-' + food_id);
-            var $protain_id = $('#protain-' + food_id);
-            var $fat_id = $('#fat-' + food_id);
-            var $gram = $('#amount_text-' + food_id);
-            var $num = $('#num-text-' + food_id);
-            var $num_change = $('#num-change-' + food_id);
-            var $amount_change = $('#amount-change-' + food_id);
-            var $num_box = $('#num-box-' + food_id);
-            var $amount_box = $('#amount-box-' + food_id);
-            var n = Number($num.val()); 
-            if ($.isNumeric(n)){
-            var energy_change = Math.round(energy * general_weight / 100 * n, 1);
-            var carbohydrate_change = Math.round(carbohydrate * general_weight / 100 * n, 1);
-            var protain_change = Math.round(protain * general_weight / 100 * n, 1);
-            var fat_change = Math.round(fat * general_weight / 100 * n, 1);
-            $energy_id.text(energy_change + 'kcal');
-            $carbohydrate_id.text(carbohydrate_change + 'g');
-            $protain_id.text(protain_change + 'g');
-            $fat_id.text(fat_change + 'g');
-            }
-        });
-        // gで指定ボタン
-        $(document).on('click','.change1',function(e){
-            var e = e || window.event;
+    // グラムを入力すると変換
+    $(document).on('keyup','.change4',function(e){
+        var e = e || window.event;
         var food = e.target || e.stcElement;
         var food_id = food.dataset.id;
         var carbohydrate = food.dataset.carbohydrate;
@@ -146,55 +82,119 @@ $(document).ready(function() {
         var $fat_id = $('#fat-' + food_id);
         var $gram = $('#amount-text-' + food_id);
         var $num = $('#num-text-' + food_id);
+        var $num_change = $('#num-change-' + food_id);
         var $amount_change = $('#amount-change-' + food_id);
         var $num_box = $('#num-box-' + food_id);
         var $amount_box = $('#amount-box-' + food_id);
-            $amount_box.removeClass('d-none');
-            $num_box.addClass('d-none');
-            $gram.val(100);
-            $num.val(null);
-            $energy_id.text(energy + 'kcal');
-            $carbohydrate_id.text(carbohydrate + 'g');
-            $protain_id.text(protain + 'g');
-            $fat_id.text(fat + 'g');
-        });
-        // 個数で指定ボタン
-        $(document).on('click','.change3',function(e){
-            var e = e || window.event;
-            var food = e.target || e.stcElement;
-            var food_id = food.dataset.id;
-            var carbohydrate = food.dataset.carbohydrate;
-            var protain = food.dataset.protain;
-            var fat = food.dataset.fat;
-            var general_weight = food.dataset.general_weight;
-            var energy = carbohydrate * 4 + protain * 4 + fat * 9;
-            var $energy_id = $('#energy-' + food_id);
-            var $carbohydrate_id = $('#carbohydrate-' + food_id);
-            var $protain_id = $('#protain-' + food_id);
-            var $fat_id = $('#fat-' + food_id);
-            var $gram = $('#amount-text-' + food_id);
-            var $num = $('#num-text-' + food_id);
-            var $num_change = $('#num-change-' + food_id);
-            var $num_box = $('#num-box-' + food_id);
-            var $amount_box = $('#amount-box-' + food_id);
-            $num_box.removeClass('d-none');
-            $amount_box.addClass('d-none');
-            var energy_num = Math.round((energy * general_weight / 100)*10)/10;
-            var carbohydrate_num = Math.round((carbohydrate * general_weight / 100)*10)/10;
-            var protain_num = Math.round((protain * general_weight / 100)*10)/10;
-            var fat_num = Math.round((fat * general_weight / 100)*10)/10;
-            $gram.val(null);
-            $num.val(1);
-            $energy_id.text(energy_num + 'kcal')
-            $carbohydrate_id.text(carbohydrate_num + 'g')
-            $protain_id.text(protain_num + 'g')
-            $fat_id.text(fat_num + 'g')
-            
-        });
+        var g = Number($gram.val());   
+        if ($.isNumeric(g)){
+            var energy_change = Math.round((energy * g / 100)*10)/10;
+            var carbohydrate_change = Math.round((carbohydrate * g / 100)*10)/10;
+            var protain_change = Math.round((protain * g / 100)*10)/10;
+            var fat_change = Math.round((fat * g / 100)*10)/10;
+            $energy_id.text(energy_change + 'kcal');
+            $carbohydrate_id.text(carbohydrate_change + 'g');
+            $protain_id.text(protain_change + 'g');
+            $fat_id.text(fat_change + 'g');
+        }
+    });
+    // gを入力すると変換
+    $(document).on("keyup",'.change2',function(e){
+        var e = e || window.event;
+        var food = e.target || e.stcElement;
+        var food_id = food.dataset.id;
+        var carbohydrate = food.dataset.carbohydrate;
+        var protain = food.dataset.protain;
+        var fat = food.dataset.fat;
+        var general_weight = food.dataset.general_weight;
+        var energy = carbohydrate * 4 + protain * 4 + fat * 9;
+        var $energy_id = $('#energy-' + food_id);
+        var $carbohydrate_id = $('#carbohydrate-' + food_id);
+        var $protain_id = $('#protain-' + food_id);
+        var $fat_id = $('#fat-' + food_id);
+        var $gram = $('#amount_text-' + food_id);
+        var $num = $('#num-text-' + food_id);
+        var $num_change = $('#num-change-' + food_id);
+        var $amount_change = $('#amount-change-' + food_id);
+        var $num_box = $('#num-box-' + food_id);
+        var $amount_box = $('#amount-box-' + food_id);
+        var n = Number($num.val()); 
+        if ($.isNumeric(n)){
+        var energy_change = Math.round(energy * general_weight / 100 * n, 1);
+        var carbohydrate_change = Math.round(carbohydrate * general_weight / 100 * n, 1);
+        var protain_change = Math.round(protain * general_weight / 100 * n, 1);
+        var fat_change = Math.round(fat * general_weight / 100 * n, 1);
+        $energy_id.text(energy_change + 'kcal');
+        $carbohydrate_id.text(carbohydrate_change + 'g');
+        $protain_id.text(protain_change + 'g');
+        $fat_id.text(fat_change + 'g');
+        }
+    });
+    // gで指定ボタン
+    $(document).on('click','.change1',function(e){
+        var e = e || window.event;
+    var food = e.target || e.stcElement;
+    var food_id = food.dataset.id;
+    var carbohydrate = food.dataset.carbohydrate;
+    var protain = food.dataset.protain;
+    var fat = food.dataset.fat;
+    var general_weight = food.dataset.general_weight;
+    var energy = carbohydrate * 4 + protain * 4 + fat * 9;
+    var $energy_id = $('#energy-' + food_id);
+    var $carbohydrate_id = $('#carbohydrate-' + food_id);
+    var $protain_id = $('#protain-' + food_id);
+    var $fat_id = $('#fat-' + food_id);
+    var $gram = $('#amount-text-' + food_id);
+    var $num = $('#num-text-' + food_id);
+    var $amount_change = $('#amount-change-' + food_id);
+    var $num_box = $('#num-box-' + food_id);
+    var $amount_box = $('#amount-box-' + food_id);
+        $amount_box.removeClass('d-none');
+        $num_box.addClass('d-none');
+        $gram.val(100);
+        $num.val(null);
+        $energy_id.text(energy + 'kcal');
+        $carbohydrate_id.text(carbohydrate + 'g');
+        $protain_id.text(protain + 'g');
+        $fat_id.text(fat + 'g');
+    });
+    // 個数で指定ボタン
+    $(document).on('click','.change3',function(e){
+        var e = e || window.event;
+        var food = e.target || e.stcElement;
+        var food_id = food.dataset.id;
+        var carbohydrate = food.dataset.carbohydrate;
+        var protain = food.dataset.protain;
+        var fat = food.dataset.fat;
+        var general_weight = food.dataset.general_weight;
+        var energy = carbohydrate * 4 + protain * 4 + fat * 9;
+        var $energy_id = $('#energy-' + food_id);
+        var $carbohydrate_id = $('#carbohydrate-' + food_id);
+        var $protain_id = $('#protain-' + food_id);
+        var $fat_id = $('#fat-' + food_id);
+        var $gram = $('#amount-text-' + food_id);
+        var $num = $('#num-text-' + food_id);
+        var $num_change = $('#num-change-' + food_id);
+        var $num_box = $('#num-box-' + food_id);
+        var $amount_box = $('#amount-box-' + food_id);
+        $num_box.removeClass('d-none');
+        $amount_box.addClass('d-none');
+        var energy_num = Math.round((energy * general_weight / 100)*10)/10;
+        var carbohydrate_num = Math.round((carbohydrate * general_weight / 100)*10)/10;
+        var protain_num = Math.round((protain * general_weight / 100)*10)/10;
+        var fat_num = Math.round((fat * general_weight / 100)*10)/10;
+        $gram.val(null);
+        $num.val(1);
+        $energy_id.text(energy_num + 'kcal')
+        $carbohydrate_id.text(carbohydrate_num + 'g')
+        $protain_id.text(protain_num + 'g')
+        $fat_id.text(fat_num + 'g')
+        
+    });
 
     // 食材無限スクロール
     // スクロールされた時に実行
-$(window).on("scroll", function () {
+    $(window).on("scroll", function () {
     　　// スクロール位置
         // ブラウザ全体の高さ
         var document_h = $(document).height(); 
